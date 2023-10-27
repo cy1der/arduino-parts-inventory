@@ -10,10 +10,17 @@
 import { Router, Route, Set } from '@redwoodjs/router'
 
 import NavbarLayout from 'src/layouts/NavbarLayout'
+import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
 
 const Routes = () => {
   return (
     <Router>
+      <Set wrap={ScaffoldLayout} title="Parts" titleTo="parts" buttonLabel="New Part" buttonTo="newPart">
+        <Route path="/admin/parts/new" page={PartNewPartPage} name="newPart" />
+        <Route path="/admin/parts/{id:Int}/edit" page={PartEditPartPage} name="editPart" />
+        <Route path="/admin/parts/{id:Int}" page={PartPartPage} name="part" />
+        <Route path="/admin/parts" page={PartPartsPage} name="parts" />
+      </Set>
       <Set wrap={NavbarLayout}>
         <Route path="/" page={HomePage} name="home" />
       </Set>
