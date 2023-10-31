@@ -9,8 +9,8 @@ export const schema = gql`
   }
 
   type Query {
-    parts: [Part!]! @requireAuth
-    part(id: Int!): Part @requireAuth
+    parts: [Part!]! @skipAuth
+    part(id: Int!): Part @skipAuth
   }
 
   input CreatePartInput {

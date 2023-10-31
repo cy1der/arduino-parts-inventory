@@ -46,19 +46,19 @@
   @apply bg-gray-100 p-4;
 }
 .rw-link {
-  @apply text-blue-400 underline;
+  @apply text-blue-400 underline font-inter;
 }
 .rw-link:hover {
   @apply text-blue-500;
 }
 .rw-forgot-link {
-  @apply mt-1 text-right text-xs text-gray-400 underline;
+  @apply mt-1 text-right text-xs text-gray-400 underline font-inter;
 }
 .rw-forgot-link:hover {
   @apply text-blue-500;
 }
 .rw-heading {
-  @apply font-semibold;
+  @apply font-semibold font-inter;
 }
 .rw-heading.rw-heading-primary {
   @apply text-xl;
@@ -89,31 +89,10 @@
   @apply mt-2 list-inside list-disc;
 }
 .rw-button {
-  @apply flex cursor-pointer justify-center rounded border-0 bg-gray-200 px-4 py-1 text-xs font-semibold uppercase leading-loose tracking-wide text-gray-500 no-underline transition duration-100;
-}
-.rw-button:hover {
-  @apply bg-gray-500 text-white;
+  @apply btn btn-primary font-inter
 }
 .rw-button.rw-button-small {
   @apply rounded-sm px-2 py-1 text-xs;
-}
-.rw-button.rw-button-green {
-  @apply bg-green-500 text-white;
-}
-.rw-button.rw-button-green:hover {
-  @apply bg-green-700;
-}
-.rw-button.rw-button-blue {
-  @apply bg-blue-500 text-white;
-}
-.rw-button.rw-button-blue:hover {
-  @apply bg-blue-700;
-}
-.rw-button.rw-button-red {
-  @apply bg-red-500 text-white;
-}
-.rw-button.rw-button-red:hover {
-  @apply bg-red-700 text-white;
 }
 .rw-button-icon {
   @apply mr-1 text-xl leading-5;
@@ -128,13 +107,13 @@
   @apply mt-8;
 }
 .rw-label {
-  @apply mt-6 block text-left font-semibold text-gray-600;
+  @apply mt-6 block text-left font-semibold text-gray-600 font-inter;
 }
 .rw-label.rw-label-error {
   @apply text-red-600;
 }
 .rw-input {
-  @apply mt-2 block w-full rounded border border-gray-200 bg-white p-2 outline-none;
+  @apply mt-2 block w-full rounded border border-gray-200 bg-white p-2 outline-none font-inter;
 }
 .rw-check-radio-items {
   @apply flex justify-items-center;
@@ -157,7 +136,7 @@
   box-shadow: 0 0 5px #c53030;
 }
 .rw-field-error {
-  @apply mt-1 block text-xs font-semibold uppercase text-red-600;
+  @apply mt-1 block text-xs font-semibold text-red-600 font-inter text-left;
 }
 .rw-table-wrapper-responsive {
   @apply overflow-x-auto;

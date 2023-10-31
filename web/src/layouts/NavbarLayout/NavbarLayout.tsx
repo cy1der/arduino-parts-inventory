@@ -3,6 +3,7 @@ import Icon from '@mdi/react'
 
 import { Link, routes } from '@redwoodjs/router'
 
+import NavbarAccountIcon from 'src/components/NavbarAccountIcon/NavbarAccountIcon'
 import ThemeToggle from 'src/components/ThemeToggle/ThemeToggle'
 
 type NavBarLayoutProps = {
@@ -14,7 +15,10 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
     <>
       <div className="navbar bg-base-100 shadow-lg">
         <div className="justify-start space-x-3">
-          <Icon path={mdiChip} className="ml-3 h-10 text-logo" />
+          <Icon
+            path={mdiChip}
+            className="ml-3 hidden h-10 text-logo md:block"
+          />
           <Link
             to={routes.home()}
             className="btn btn-ghost items-center hover:shadow-lg"
@@ -36,6 +40,7 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
             </li>
           </ul> */}
           <ThemeToggle />
+          <NavbarAccountIcon mobile={false} className="hidden lg:block" />
           <div className="lg:hidden">
             <input
               id="mobile-menu-drawer"
@@ -57,7 +62,7 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
               </label>
               <ul className="min-h-full w-80 space-y-3 bg-base-100 p-3 text-base-content shadow-lg">
                 <li>
-                  <div className="flex justify-center space-x-3">
+                  <div className="flex items-center justify-between">
                     <Icon path={mdiChip} className="ml-3 h-10 text-logo" />
                     <Link
                       to={routes.home()}
@@ -67,6 +72,7 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
                         Parts Inventory
                       </p>
                     </Link>
+                    <NavbarAccountIcon mobile={true} />
                   </div>
                 </li>
                 {/* <li>
