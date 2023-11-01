@@ -62,7 +62,7 @@ const ForgotPasswordPage = () => {
                       validation={{
                         required: {
                           value: true,
-                          message: 'Email is required',
+                          message: 'Required',
                         },
                         pattern: {
                           value: new RegExp(

@@ -140,7 +140,9 @@ const SignupPage = () => {
             </div>
           </div>
           <div className="rw-login-link">
-            <span className="font-inter">Already have an account?</span>{' '}
+            <span className="font-inter text-base-content">
+              Already have an account?
+            </span>{' '}
             <Link to={routes.login()} className="rw-link">
               Log in!
             </Link>

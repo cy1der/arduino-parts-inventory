@@ -107,7 +107,9 @@ const LoginPage = () => {
             </div>
           </div>
           <div className="rw-login-link">
-            <span className="font-inter">Don&apos;t have an account?</span>{' '}
+            <span className="font-inter text-base-content">
+              Don&apos;t have an account?
+            </span>{' '}
             <Link to={routes.signup()} className="rw-link">
               Sign up!
             </Link>
