@@ -113,13 +113,21 @@ export const handler = async (
     // If this returns anything else, it will be returned by the
     // `signUp()` function in the form of: `{ message: 'String here' }`.
     handler: ({ username, hashedPassword, salt, userAttributes }) => {
+      const adminEmails: string[] = process.env.ADMIN_EMAILS.split(',')
+
+      let role = 'user'
+      const email = username.toLowerCase()
+
+      if (adminEmails.includes(email)) role = 'admin'
+
       return db.user.create({
         data: {
-          email: username,
+          email: email,
           hashedPassword: hashedPassword,
           salt: salt,
           firstName: userAttributes.firstName,
           lastName: userAttributes.lastName,
+          roles: role,
         },
       })
     },

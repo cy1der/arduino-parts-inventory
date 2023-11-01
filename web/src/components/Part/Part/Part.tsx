@@ -75,13 +75,13 @@ const Part = ({ part }: Props) => {
       <nav className="rw-button-group">
         <Link
           to={routes.editPart({ id: part.id })}
-          className="rw-button rw-button-blue"
+          className="rw-button btn-primary"
         >
           Edit
         </Link>
         <button
           type="button"
-          className="rw-button rw-button-red"
+          className="rw-button btn-error"
           onClick={() => onDeleteClick(part.id)}
         >
           Delete

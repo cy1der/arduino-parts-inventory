@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 
 import {
   Form,
-  Label,
   TextField,
   PasswordField,
   FieldError,
@@ -31,7 +30,6 @@ const SignupPage = () => {
   }, [])
 
   const onSubmit = async (data: Record<string, string>) => {
-    console.log(data)
     const response = await signUp({
       username: data.email,
       password: data.password,
@@ -58,22 +56,16 @@ const SignupPage = () => {
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
             <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">Signup</h2>
+              <h2 className="rw-heading rw-heading-primary">Sign up</h2>
             </header>
 
             <div className="rw-segment-main">
               <div className="rw-form-wrapper">
                 <Form onSubmit={onSubmit} className="rw-form-wrapper">
-                  <div className="flex justify-between space-x-3">
+                  <div className="mb-3 flex justify-between space-x-3">
                     <div>
-                      <Label
-                        name="firstName"
-                        className="mt-6 block text-left font-semibold text-gray-600"
-                        errorClassName="rw-label rw-label-error"
-                      >
-                        First Name
-                      </Label>
                       <TextField
+                        placeholder="First Name"
                         name="firstName"
                         className="rw-input"
                         errorClassName="rw-input rw-input-error"
@@ -89,15 +81,9 @@ const SignupPage = () => {
                     </div>
 
                     <div>
-                      <Label
-                        name="lastName"
-                        className="rw-label"
-                        errorClassName="rw-label rw-label-error"
-                      >
-                        Last Name
-                      </Label>
                       <TextField
                         name="lastName"
+                        placeholder="Last Name"
                         className="rw-input"
                         errorClassName="rw-input rw-input-error"
                         validation={{
@@ -111,17 +97,11 @@ const SignupPage = () => {
                     </div>
                   </div>
 
-                  <Label
-                    name="email"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Email
-                  </Label>
                   <TextField
                     name="email"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
+                    placeholder="Email"
+                    className="rw-input mb-3 min-w-full"
+                    errorClassName="rw-input rw-input-error min-w-full"
                     validation={{
                       required: {
                         value: true,
@@ -135,19 +115,13 @@ const SignupPage = () => {
                       },
                     }}
                   />
-                  <FieldError name="email" className="rw-field-error" />
+                  <FieldError name="email" className="rw-field-error pb-3" />
 
-                  <Label
-                    name="password"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Password
-                  </Label>
                   <PasswordField
                     name="password"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
+                    placeholder="Password"
+                    className="rw-input min-w-full"
+                    errorClassName="rw-input rw-input-error min-w-full"
                     autoComplete="current-password"
                     validation={{
                       required: {
@@ -159,9 +133,7 @@ const SignupPage = () => {
                   <FieldError name="password" className="rw-field-error" />
 
                   <div className="rw-button-group">
-                    <Submit className="btn btn-primary font-inter">
-                      Sign Up
-                    </Submit>
+                    <Submit className="rw-button btn-primary">Sign Up</Submit>
                   </div>
                 </Form>
               </div>

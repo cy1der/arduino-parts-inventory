@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-import { Form, Label, TextField, Submit, FieldError } from '@redwoodjs/forms'
+import { Form, TextField, Submit, FieldError } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
@@ -46,42 +46,38 @@ const ForgotPasswordPage = () => {
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
             <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">
-                Forgot Password
-              </h2>
+              <h2 className="rw-heading rw-heading-primary">Forgot Password</h2>
             </header>
 
             <div className="rw-segment-main">
               <div className="rw-form-wrapper">
                 <Form onSubmit={onSubmit} className="rw-form-wrapper">
                   <div className="text-left">
-                    <Label
-                      name="email"
-                      className="rw-label"
-                      errorClassName="rw-label rw-label-error"
-                    >
-                      Email
-                    </Label>
                     <TextField
                       name="email"
-                      className="rw-input"
-                      errorClassName="rw-input rw-input-error"
+                      placeholder="Email"
+                      className="rw-input mb-3 min-w-full"
+                      errorClassName="rw-input rw-input-error min-w-full"
                       ref={emailRef}
                       validation={{
                         required: {
                           value: true,
                           message: 'Email is required',
                         },
+                        pattern: {
+                          value: new RegExp(
+                            /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$/
+                          ),
+                          message: 'Email is not valid',
+                        },
                       }}
                     />
 
-                    <FieldError name="email" className="rw-field-error" />
+                    <FieldError name="email" className="rw-field-error pb-3" />
                   </div>
 
                   <div className="rw-button-group">
-                    <Submit className="btn btn-primary font-inter">
-                      Submit
-                    </Submit>
+                    <Submit className="rw-button btn-primary">Submit</Submit>
                   </div>
                 </Form>
               </div>

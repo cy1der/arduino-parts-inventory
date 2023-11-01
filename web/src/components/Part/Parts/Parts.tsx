@@ -37,6 +37,7 @@ const PartsList = ({ parts }: FindParts) => {
   }
 
   const thumbnail = (url: string) => {
+    if (url.includes('no_image.png')) return url
     const parts = url.split('/')
     parts.splice(3, 0, 'resize=width:100')
     return parts.join('/')
@@ -85,14 +86,14 @@ const PartsList = ({ parts }: FindParts) => {
                   <Link
                     to={routes.editPart({ id: part.id })}
                     title={'Edit part ' + part.id}
-                    className="rw-button rw-button-small rw-button-blue"
+                    className="rw-button rw-button-small btn-primary"
                   >
                     Edit
                   </Link>
                   <button
                     type="button"
                     title={'Delete part ' + part.id}
-                    className="rw-button rw-button-small rw-button-red"
+                    className="rw-button rw-button-small btn-error"
                     onClick={() => onDeleteClick(part.id)}
                   >
                     Delete

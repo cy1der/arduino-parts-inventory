@@ -22,8 +22,8 @@ export const Loading = () => <div>Loading...</div>
 
 export const Empty = () => {
   return (
-    <div className="rw-text-center">
-      {'No parts yet. '}
+    <div className="rw-text-center p-4">
+      <span className="font-inter">No parts yet.</span>{' '}
       <Link to={routes.newPart()} className="rw-link">
         {'Create one?'}
       </Link>

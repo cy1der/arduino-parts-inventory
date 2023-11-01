@@ -21,7 +21,7 @@ const Routes = () => {
       <Route path="/signup" page={SignupPage} name="signup" />
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
-      <Private unauthenticated="home">
+      <Private unauthenticated="home" roles="admin">
         <Set wrap={ScaffoldLayout} title="Parts" titleTo="parts" buttonLabel="New Part" buttonTo="newPart">
           <Route path="/admin/parts/new" page={PartNewPartPage} name="newPart" />
           <Route path="/admin/parts/{id:Int}/edit" page={PartEditPartPage} name="editPart" />

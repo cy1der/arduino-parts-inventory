@@ -27,7 +27,7 @@ export const getCurrentUser = async (session: Decoded) => {
 
   return await db.user.findUnique({
     where: { id: session.id },
-    select: { id: true, firstName: true },
+    select: { id: true, firstName: true, roles: true },
   })
 }
 
@@ -59,32 +59,27 @@ export const hasRole = (roles: AllowedRoles): boolean => {
     return false
   }
 
-  const currentUserRoles = context.currentUser?.roles
-
-  if (typeof roles === 'string') {
-    if (typeof currentUserRoles === 'string') {
-      // roles to check is a string, currentUser.roles is a string
-      return currentUserRoles === roles
-    } else if (Array.isArray(currentUserRoles)) {
-      // roles to check is a string, currentUser.roles is an array
-      return currentUserRoles?.some((allowedRole) => roles === allowedRole)
+  // If your User model includes roles, uncomment the role checks on currentUser
+  if (roles) {
+    if (Array.isArray(roles)) {
+      // the line below has changed
+      if (context.currentUser.roles)
+        return context.currentUser.roles
+          .split(',')
+          .some((role) => roles.includes(role))
     }
+
+    if (typeof roles === 'string') {
+      // the line below has changed
+      if (context.currentUser.roles)
+        return context.currentUser.roles.split(',').includes(roles)
+    }
+
+    // roles not found
+    return false
   }
 
-  if (Array.isArray(roles)) {
-    if (Array.isArray(currentUserRoles)) {
-      // roles to check is an array, currentUser.roles is an array
-      return currentUserRoles?.some((allowedRole) =>
-        roles.includes(allowedRole)
-      )
-    } else if (typeof currentUserRoles === 'string') {
-      // roles to check is an array, currentUser.roles is a string
-      return roles.some((allowedRole) => currentUserRoles === allowedRole)
-    }
-  }
-
-  // roles not found
-  return false
+  return true
 }
 
 /**

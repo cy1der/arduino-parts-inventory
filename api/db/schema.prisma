@@ -18,24 +18,13 @@ model Part {
 }
 
 model User {
-  id                  Int        @id @default(autoincrement())
+  id                  Int       @id @default(autoincrement())
   firstName           String
   lastName            String
-  email               String     @unique
+  email               String    @unique
   hashedPassword      String
   salt                String
   resetToken          String?
   resetTokenExpiresAt DateTime?
-  userRoles           UserRole[]
-}
-
-model UserRole {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  name      String
-  user      User?    @relation(fields: [userId], references: [id])
-  userId    Int?
-
-  @@unique([name, userId])
+  roles               String    @default("user")
 }

@@ -29,18 +29,21 @@ export const updatePart: MutationResolvers['updatePart'] = ({ id, input }) => {
 export const deletePart: MutationResolvers['deletePart'] = async ({ id }) => {
   const client = Filestack.init(process.env.REDWOOD_ENV_FILESTACK_API_KEY)
   const part = await db.part.findUnique({ where: { id } })
-  const handle = part.imageUrl.split('/').pop()
 
-  const security = Filestack.getSecurity(
-    {
-      expiry: new Date().getTime() + 5 * 60 * 1000,
-      handle,
-      call: ['remove'],
-    },
-    process.env.REDWOOD_ENV_FILESTACK_SECRET
-  )
+  if (!part.imageUrl.includes('no_image.png')) {
+    const handle = part.imageUrl.split('/').pop()
 
-  await client.remove(handle, security)
+    const security = Filestack.getSecurity(
+      {
+        expiry: new Date().getTime() + 5 * 60 * 1000,
+        handle,
+        call: ['remove'],
+      },
+      process.env.REDWOOD_ENV_FILESTACK_SECRET
+    )
+
+    await client.remove(handle, security)
+  }
 
   return db.part.delete({
     where: { id },

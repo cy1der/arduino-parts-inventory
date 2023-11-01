@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import {
-  Form,
-  Label,
-  PasswordField,
-  Submit,
-  FieldError,
-} from '@redwoodjs/forms'
+import { Form, PasswordField, Submit, FieldError } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
@@ -66,27 +60,19 @@ const ResetPasswordPage = ({ resetToken }: { resetToken: string }) => {
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
             <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">
-                Reset Password
-              </h2>
+              <h2 className="rw-heading rw-heading-primary">Reset Password</h2>
             </header>
 
             <div className="rw-segment-main">
               <div className="rw-form-wrapper">
                 <Form onSubmit={onSubmit} className="rw-form-wrapper">
                   <div className="text-left">
-                    <Label
-                      name="password"
-                      className="rw-label"
-                      errorClassName="rw-label rw-label-error"
-                    >
-                      New Password
-                    </Label>
                     <PasswordField
                       name="password"
+                      placeholder="New password"
                       autoComplete="new-password"
-                      className="rw-input"
-                      errorClassName="rw-input rw-input-error"
+                      className="rw-input mb-3 min-w-full"
+                      errorClassName="rw-input rw-input-error min-w-full"
                       disabled={!enabled}
                       ref={passwordRef}
                       validation={{
@@ -97,12 +83,15 @@ const ResetPasswordPage = ({ resetToken }: { resetToken: string }) => {
                       }}
                     />
 
-                    <FieldError name="password" className="rw-field-error" />
+                    <FieldError
+                      name="password"
+                      className="rw-field-error pb-3"
+                    />
                   </div>
 
                   <div className="rw-button-group">
                     <Submit
-                      className="btn btn-primary font-inter"
+                      className="rw-button btn-primary"
                       disabled={!enabled}
                     >
                       Submit

@@ -11,6 +11,7 @@ import {
   TextField,
   NumberField,
   Submit,
+  TextAreaField,
 } from '@redwoodjs/forms'
 import type { RWGqlError } from '@redwoodjs/forms'
 
@@ -36,6 +37,7 @@ const PartForm = (props: PartFormProps) => {
   }
 
   const preview = (url: string) => {
+    if (url.includes('no_image.png')) return url
     const parts = url.split('/')
     parts.splice(3, 0, 'resize=height:500')
     return parts.join('/')
@@ -51,58 +53,37 @@ const PartForm = (props: PartFormProps) => {
           listClassName="rw-form-error-list"
         />
 
-        <Label
-          name="name"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Name
-        </Label>
-
         <TextField
           name="name"
+          placeholder="Name"
           defaultValue={props.part?.name}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
+          className="rw-input mb-3 min-w-full"
+          errorClassName="rw-input rw-input-error min-w-full"
           validation={{ required: true }}
         />
 
-        <FieldError name="name" className="rw-field-error" />
+        <FieldError name="name" className="rw-field-error pb-3" />
 
-        <Label
+        <TextAreaField
           name="description"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Description
-        </Label>
-
-        <TextField
-          name="description"
+          placeholder="Description"
           defaultValue={props.part?.description}
-          className="rw-input"
+          className="rw-textarea mb-1 min-w-full"
           errorClassName="rw-input rw-input-error"
         />
 
-        <FieldError name="description" className="rw-field-error" />
-
-        <Label
-          name="availableStock"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Available stock
-        </Label>
+        <FieldError name="description" className="rw-field-error pb-3" />
 
         <NumberField
           name="availableStock"
-          defaultValue={props.part?.availableStock}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
+          defaultValue={props.part?.availableStock ?? 0}
+          className="rw-input min-w-full"
+          errorClassName="rw-input rw-input-error min-w-full"
+          validation={{ required: true, min: 0 }}
+          min={0}
         />
 
-        <FieldError name="availableStock" className="rw-field-error" />
+        <FieldError name="availableStock" className="rw-field-error pb-3" />
 
         <Label
           name="imageUrl"
@@ -141,7 +122,7 @@ const PartForm = (props: PartFormProps) => {
         <FieldError name="imageUrl" className="rw-field-error" />
 
         <div className="rw-button-group">
-          <Submit disabled={props.loading} className="rw-button rw-button-blue">
+          <Submit disabled={props.loading} className="rw-button btn-primary">
             Save
           </Submit>
         </div>

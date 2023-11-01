@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 
 import {
   Form,
-  Label,
   TextField,
   PasswordField,
   Submit,
@@ -53,23 +52,17 @@ const LoginPage = () => {
         <div className="rw-scaffold rw-login-container">
           <div className="rw-segment">
             <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">Login</h2>
+              <h2 className="rw-heading rw-heading-primary">Login</h2>
             </header>
 
             <div className="rw-segment-main">
               <div className="rw-form-wrapper">
                 <Form onSubmit={onSubmit} className="rw-form-wrapper">
-                  <Label
-                    name="email"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Email
-                  </Label>
                   <TextField
                     name="email"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
+                    placeholder="Email"
+                    className="rw-input mb-3 min-w-full"
+                    errorClassName="rw-input rw-input-error min-w-full"
                     ref={emailRef}
                     validation={{
                       required: {
@@ -79,19 +72,13 @@ const LoginPage = () => {
                     }}
                   />
 
-                  <FieldError name="email" className="rw-field-error" />
+                  <FieldError name="email" className="rw-field-error pb-3" />
 
-                  <Label
-                    name="password"
-                    className="rw-label"
-                    errorClassName="rw-label rw-label-error"
-                  >
-                    Password
-                  </Label>
                   <PasswordField
                     name="password"
-                    className="rw-input"
-                    errorClassName="rw-input rw-input-error"
+                    placeholder="Password"
+                    className="rw-input mb-3 min-w-full"
+                    errorClassName="rw-input rw-input-error min-w-full"
                     autoComplete="current-password"
                     validation={{
                       required: {
@@ -113,9 +100,7 @@ const LoginPage = () => {
                   </div>
 
                   <div className="rw-button-group">
-                    <Submit className="btn btn-primary font-inter">
-                      Login
-                    </Submit>
+                    <Submit className="rw-button btn-primary ">Login</Submit>
                   </div>
                 </Form>
               </div>

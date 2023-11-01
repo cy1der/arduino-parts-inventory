@@ -1,10 +1,10 @@
+import type { CreatePartInput } from 'types/graphql'
+
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import PartForm from 'src/components/Part/PartForm'
-
-import type { CreatePartInput } from 'types/graphql'
 
 const CREATE_PART_MUTATION = gql`
   mutation CreatePartMutation($input: CreatePartInput!) {
