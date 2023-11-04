@@ -30,7 +30,7 @@ const LoginPage = () => {
 
   const onSubmit = async (data: Record<string, string>) => {
     const response = await logIn({
-      username: data.email,
+      username: data.email.toLowerCase(),
       password: data.password,
     })
 

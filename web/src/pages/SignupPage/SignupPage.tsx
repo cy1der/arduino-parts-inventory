@@ -31,7 +31,7 @@ const SignupPage = () => {
 
   const onSubmit = async (data: Record<string, string>) => {
     const response = await signUp({
-      username: data.email,
+      username: data.email.toLowerCase(),
       password: data.password,
       firstName: data.firstName,
       lastName: data.lastName,
@@ -114,6 +114,7 @@ const SignupPage = () => {
                         message: 'Email is not valid',
                       },
                     }}
+                    inputMode="email"
                   />
                   <FieldError name="email" className="rw-field-error pb-3" />
 

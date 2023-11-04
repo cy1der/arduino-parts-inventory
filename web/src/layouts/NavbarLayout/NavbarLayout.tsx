@@ -3,6 +3,7 @@ import Icon from '@mdi/react'
 
 import { Link, routes } from '@redwoodjs/router'
 
+import { useAuth } from 'src/auth'
 import NavbarAccountIcon from 'src/components/NavbarAccountIcon/NavbarAccountIcon'
 import ThemeToggle from 'src/components/ThemeToggle/ThemeToggle'
 
@@ -11,9 +12,11 @@ type NavBarLayoutProps = {
 }
 
 const NavBarLayout = ({ children }: NavBarLayoutProps) => {
+  const { hasRole } = useAuth()
+
   return (
     <>
-      <div className="navbar bg-base-100 shadow-lg">
+      <div className="navbar sticky top-0 z-50 bg-base-100 shadow-lg">
         <div className="justify-start space-x-3">
           <Icon
             path={mdiChip}
@@ -29,16 +32,20 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
           </Link>
         </div>
         <div className="ml-auto justify-end space-x-3">
-          {/* <ul className="relative hidden items-center space-x-3 lg:flex">
-            <li>
-              <Link
-                to={routes.faq()}
-                className="btn btn-ghost font-inter hover:shadow-lg"
-              >
-                FAQ
-              </Link>
-            </li>
-          </ul> */}
+          {hasRole('admin') ? (
+            <ul className="relative hidden items-center space-x-3 lg:flex">
+              <li>
+                <Link
+                  to={routes.parts()}
+                  className="btn btn-ghost font-inter hover:shadow-lg"
+                >
+                  Parts
+                </Link>
+              </li>
+            </ul>
+          ) : (
+            <></>
+          )}
           <ThemeToggle />
           <NavbarAccountIcon mobile={false} className="hidden lg:block" />
           <div className="lg:hidden">
@@ -75,14 +82,18 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
                     <NavbarAccountIcon mobile={true} />
                   </div>
                 </li>
-                {/* <li>
-                  <Link
-                    to={routes.faq()}
-                    className="btn btn-ghost w-full hover:shadow-lg"
-                  >
-                    <p className="font-inter text-base">FAQ</p>
-                  </Link>
-                </li> */}
+                {hasRole('admin') ? (
+                  <li>
+                    <Link
+                      to={routes.parts()}
+                      className="btn btn-ghost w-full hover:shadow-lg"
+                    >
+                      <p className="font-inter text-base">Parts</p>
+                    </Link>
+                  </li>
+                ) : (
+                  <></>
+                )}
               </ul>
             </div>
           </div>

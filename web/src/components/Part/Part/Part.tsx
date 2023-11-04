@@ -4,7 +4,7 @@ import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { timeTag } from 'src/lib/formatters'
+import { timeTag } from 'src/pages/lib/formatters'
 
 const DELETE_PART_MUTATION = gql`
   mutation DeletePartMutation($id: Int!) {

@@ -1,3 +1,6 @@
+import { mdiHome } from '@mdi/js'
+import Icon from '@mdi/react'
+
 import { Link, routes } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/toast'
 
@@ -20,9 +23,14 @@ const ScaffoldLayout = ({
     <div className="rw-scaffold">
       <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
       <header className="rw-header">
-        <h1 className="rw-heading rw-heading-primary rw-button btn-ghost normal-case">
-          <Link to={routes[titleTo]()}>{title}</Link>
-        </h1>
+        <div className="space-x-3">
+          <Link to={routes.home()} className="btn btn-ghost">
+            <Icon path={mdiHome} className="h-8 w-8" />
+          </Link>
+          <h1 className="rw-heading rw-heading-primary rw-button btn-ghost normal-case">
+            <Link to={routes[titleTo]()}>{title}</Link>
+          </h1>
+        </div>
         <Link to={routes[buttonTo]()} className="rw-button btn-success">
           <div className="rw-button-icon">+</div> {buttonLabel}
         </Link>

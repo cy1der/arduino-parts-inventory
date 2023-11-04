@@ -107,7 +107,7 @@
   @apply input input-bordered w-full max-w-xs font-inter text-base-content;
 }
 .rw-textarea {
-  @apply textarea textarea-bordered font-inter max-w-xs w-full text-base-content;
+  @apply textarea textarea-bordered text-base font-inter max-w-xs w-full text-base-content;
 }
 .rw-check-radio-items {
   @apply flex justify-items-center;

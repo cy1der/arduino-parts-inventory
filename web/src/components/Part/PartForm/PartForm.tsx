@@ -28,7 +28,10 @@ const PartForm = (props: PartFormProps) => {
   const [imageUrl, setImageUrl] = useState(props?.part?.imageUrl)
 
   const onSubmit = (data: FormPart) => {
-    const dataWithImageUrl = Object.assign(data, { imageUrl })
+    console.log(imageUrl)
+    const dataWithImageUrl = Object.assign(data, {
+      imageUrl: imageUrl ?? '/no_image.png',
+    })
     props.onSave(dataWithImageUrl, props?.part?.id)
   }
 
@@ -81,6 +84,7 @@ const PartForm = (props: PartFormProps) => {
           errorClassName="rw-input rw-input-error min-w-full"
           validation={{ required: true, min: 0 }}
           min={0}
+          max={2147483647}
         />
 
         <FieldError name="availableStock" className="rw-field-error pb-3" />
@@ -112,7 +116,7 @@ const PartForm = (props: PartFormProps) => {
             />
             <button
               onClick={() => setImageUrl(null)}
-              className="rw-button rw-button-blue"
+              className="rw-button btn-primary"
             >
               Replace Image
             </button>

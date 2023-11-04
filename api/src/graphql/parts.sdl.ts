@@ -8,7 +8,29 @@ export const schema = gql`
     createdAt: DateTime!
   }
 
+  type PartPage {
+    parts: [Part!]!
+    count: Int!
+    page: Int!
+    sort: SortMethod!
+    order: SortOrder!
+  }
+
+  enum SortMethod {
+    id
+    name
+    description
+    stock
+    createdAt
+  }
+
+  enum SortOrder {
+    ascending
+    descending
+  }
+
   type Query {
+    partPage(page: Int, sort: SortMethod, order: SortOrder): PartPage @skipAuth
     parts: [Part!]! @skipAuth
     part(id: Int!): Part @skipAuth
   }
