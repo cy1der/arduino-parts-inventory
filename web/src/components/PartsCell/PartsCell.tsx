@@ -38,6 +38,7 @@ export const QUERY = gql`
         description
         availableStock
         imageUrl
+        createdAt
       }
       count
       page

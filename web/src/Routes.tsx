@@ -25,6 +25,7 @@ const Routes = () => {
       <Set wrap={NavbarLayout}>
         <Route path="/" page={HomePage} name="home" />
         <Route path="/part/{id:Int}" page={PartPage} name="partDetails" />
+        <Route path="/basket" page={BasketPage} name="basket" />
       </Set>
 
       <Route notfound page={NotFoundPage} />

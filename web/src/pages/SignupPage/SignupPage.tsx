@@ -13,6 +13,7 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import ToastNotification from 'src/components/ToastNotification'
 
 const SignupPage = () => {
   const { isAuthenticated, signUp } = useAuth()
@@ -37,14 +38,16 @@ const SignupPage = () => {
       lastName: data.lastName,
     })
 
-    if (response.message) {
-      toast(response.message)
-    } else if (response.error) {
-      toast.error(response.error)
-    } else {
-      // user is signed in automatically
-      toast.success('Welcome!')
-    }
+    if (response.message) toast(response.message)
+    else if (response.error)
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="error" message={response.error} />
+      ))
+    // user is signed in automatically
+    else
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="success" message="Welcome!" />
+      ))
   }
 
   return (

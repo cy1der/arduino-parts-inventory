@@ -21,7 +21,7 @@ const ScaffoldLayout = ({
 }: LayoutProps) => {
   return (
     <div className="rw-scaffold">
-      <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
+      <Toaster />
       <header className="rw-header">
         <div className="space-x-3">
           <Link to={routes.home()} className="btn btn-ghost">

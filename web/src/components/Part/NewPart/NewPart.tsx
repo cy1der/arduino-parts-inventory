@@ -5,6 +5,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import PartForm from 'src/components/Part/PartForm'
+import ToastNotification from 'src/components/ToastNotification'
 
 const CREATE_PART_MUTATION = gql`
   mutation CreatePartMutation($input: CreatePartInput!) {
@@ -17,11 +18,15 @@ const CREATE_PART_MUTATION = gql`
 const NewPart = () => {
   const [createPart, { loading, error }] = useMutation(CREATE_PART_MUTATION, {
     onCompleted: () => {
-      toast.success('Part created')
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="success" message="Part created" />
+      ))
       navigate(routes.parts())
     },
     onError: (error) => {
-      toast.error(error.message)
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="error" message={error.message} />
+      ))
     },
   })
 

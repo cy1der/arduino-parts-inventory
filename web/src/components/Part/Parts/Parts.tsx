@@ -5,6 +5,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import { QUERY } from 'src/components/Part/PartsCell'
+import ToastNotification from 'src/components/ToastNotification'
 import { timeTag, truncate } from 'src/lib/formatters'
 
 const DELETE_PART_MUTATION = gql`
@@ -18,13 +19,17 @@ const DELETE_PART_MUTATION = gql`
 const PartsList = ({ parts }: FindParts) => {
   const [deletePart] = useMutation(DELETE_PART_MUTATION, {
     onCompleted: () => {
-      toast.success('Part deleted')
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="success" message="Part deleted" />
+      ))
     },
     onError: (error) => {
-      toast.error(error.message)
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="error" message={error.message} />
+      ))
     },
     // This refetches the query on the list page. Read more about other ways to
-    // update the cache over here:
+    // update the cache over here:ya
     // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
     refetchQueries: [{ query: QUERY }],
     awaitRefetchQueries: true,
@@ -44,7 +49,7 @@ const PartsList = ({ parts }: FindParts) => {
   }
 
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
+    <div className="rw-segment rw-table-wrapper-responsive font-inter">
       <table className="rw-table">
         <thead>
           <tr>

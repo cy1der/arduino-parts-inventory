@@ -6,6 +6,7 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import ToastNotification from 'src/components/ToastNotification'
 
 const ForgotPasswordPage = () => {
   const { isAuthenticated, forgotPassword } = useAuth()
@@ -25,14 +26,20 @@ const ForgotPasswordPage = () => {
     const response = await forgotPassword(data.email.toLowerCase())
 
     if (response.error) {
-      toast.error(response.error)
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="error" message={response.error} />
+      ))
     } else {
       // The function `forgotPassword.handler` in api/src/functions/auth.js has
       // been invoked, let the user know how to get the link to reset their
       // password (sent in email, perhaps?)
-      toast.success(
-        'A link to reset your password was sent to ' + response.email
-      )
+      toast.custom((t) => (
+        <ToastNotification
+          toast={t}
+          type="success"
+          message={`A link to reset your password was sent to ${response.email}`}
+        />
+      ))
       navigate(routes.login())
     }
   }

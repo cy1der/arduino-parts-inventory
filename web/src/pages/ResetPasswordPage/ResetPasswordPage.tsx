@@ -6,6 +6,7 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import ToastNotification from 'src/components/ToastNotification'
 
 const ResetPasswordPage = ({ resetToken }: { resetToken: string }) => {
   const { isAuthenticated, reauthenticate, validateResetToken, resetPassword } =
@@ -23,7 +24,9 @@ const ResetPasswordPage = ({ resetToken }: { resetToken: string }) => {
       const response = await validateResetToken(resetToken)
       if (response.error) {
         setEnabled(false)
-        toast.error(response.error)
+        toast.custom((t) => (
+          <ToastNotification toast={t} type="error" message={response.error} />
+        ))
       } else {
         setEnabled(true)
       }
@@ -43,9 +46,17 @@ const ResetPasswordPage = ({ resetToken }: { resetToken: string }) => {
     })
 
     if (response.error) {
-      toast.error(response.error)
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="error" message={response.error} />
+      ))
     } else {
-      toast.success('Password changed!')
+      toast.custom((t) => (
+        <ToastNotification
+          toast={t}
+          type="success"
+          message="Password changed!"
+        />
+      ))
       await reauthenticate()
       navigate(routes.login())
     }

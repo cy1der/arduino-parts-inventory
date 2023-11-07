@@ -51,7 +51,8 @@ export const schema = gql`
 
   type Mutation {
     createPart(input: CreatePartInput!): Part! @requireAuth
-    updatePart(id: Int!, input: UpdatePartInput!): Part! @requireAuth
-    deletePart(id: Int!): Part! @requireAuth
+    updatePart(id: Int!, input: UpdatePartInput!): Part!
+      @requireAuth(roles: "admin")
+    deletePart(id: Int!): Part! @requireAuth(roles: "admin")
   }
 `

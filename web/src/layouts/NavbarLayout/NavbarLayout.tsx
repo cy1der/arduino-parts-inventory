@@ -1,11 +1,15 @@
-import { mdiChip, mdiMenu } from '@mdi/js'
+import { useState } from 'react'
+
+import { mdiChip, mdiMenu, mdiBasket } from '@mdi/js'
 import Icon from '@mdi/react'
 
 import { Link, routes } from '@redwoodjs/router'
+import { Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 import NavbarAccountIcon from 'src/components/NavbarAccountIcon/NavbarAccountIcon'
 import ThemeToggle from 'src/components/ThemeToggle/ThemeToggle'
+import { getBasket } from 'src/lib/basket'
 
 type NavBarLayoutProps = {
   children?: React.ReactNode
@@ -13,9 +17,11 @@ type NavBarLayoutProps = {
 
 const NavBarLayout = ({ children }: NavBarLayoutProps) => {
   const { hasRole } = useAuth()
+  const [basket] = useState(getBasket())
 
   return (
     <>
+      <Toaster />
       <div className="navbar sticky top-0 z-50 bg-base-100 shadow-lg">
         <div className="justify-start space-x-3">
           <Icon
@@ -47,6 +53,22 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
             <></>
           )}
           <ThemeToggle />
+          <Link
+            to={routes.basket()}
+            className="items-cente btn btn-ghost hidden hover:shadow-lg lg:flex"
+          >
+            <div className="indicator">
+              {basket.length > 0 ? (
+                <span className="badge indicator-item badge-primary font-inter">
+                  {basket.length}
+                </span>
+              ) : (
+                <></>
+              )}
+
+              <Icon path={mdiBasket} className="h-8 w-8 text-base-content" />
+            </div>
+          </Link>
           <NavbarAccountIcon mobile={false} className="hidden lg:block" />
           <div className="lg:hidden">
             <input
@@ -94,6 +116,14 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
                 ) : (
                   <></>
                 )}
+                <li>
+                  <Link
+                    to={routes.basket()}
+                    className="btn btn-ghost w-full hover:shadow-lg"
+                  >
+                    <p className="font-inter text-base">Basket</p>
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

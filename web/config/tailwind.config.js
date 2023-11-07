@@ -13,7 +13,7 @@ export const theme = {
     },
   },
 }
-export const plugins = [require('daisyui')]
+export const plugins = [require('daisyui'), require('tailwindcss-animate')]
 export const daisyui = {
   themes: ['light', 'dark'],
 }

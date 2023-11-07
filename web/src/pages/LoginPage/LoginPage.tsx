@@ -1,5 +1,4 @@
-import { useRef } from 'react'
-import { useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 
 import {
   Form,
@@ -13,6 +12,7 @@ import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import ToastNotification from 'src/components/ToastNotification'
 
 const LoginPage = () => {
   const { isAuthenticated, logIn } = useAuth()
@@ -37,9 +37,13 @@ const LoginPage = () => {
     if (response.message) {
       toast(response.message)
     } else if (response.error) {
-      toast.error(response.error)
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="error" message={response.error} />
+      ))
     } else {
-      toast.success('Welcome back!')
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="success" message="Welcome back!" />
+      ))
     }
   }
 

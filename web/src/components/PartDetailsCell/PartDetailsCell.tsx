@@ -2,17 +2,24 @@ import { useState } from 'react'
 
 import { mdiAlert, mdiPlus, mdiMinus } from '@mdi/js'
 import { Icon } from '@mdi/react'
-import type { FindPartById } from 'types/graphql'
+import type { FindPartDetailsById } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+
+import { addToBasket } from 'src/lib/basket'
+
+import ToastNotification from '../ToastNotification'
 
 export const QUERY = gql`
-  query FindPartById($id: Int!) {
+  query FindPartDetailsById($id: Int!) {
     part: part(id: $id) {
+      id
       name
       description
       availableStock
       imageUrl
+      createdAt
     }
   }
 `
@@ -47,7 +54,7 @@ const image = (url: string, size: number) => {
   return parts.join('/')
 }
 
-export const Success = ({ part }: CellSuccessProps<FindPartById>) => {
+export const Success = ({ part }: CellSuccessProps<FindPartDetailsById>) => {
   const [toTake, setToTake] = useState(1)
   return (
     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
@@ -91,7 +98,31 @@ export const Success = ({ part }: CellSuccessProps<FindPartById>) => {
               <Icon path={mdiPlus} className="h-6 w-6" />
             </button>
           </div>
-          <button className="btn btn-primary">Add to basket</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              const newBasket = addToBasket(part, toTake)
+
+              if (typeof newBasket == 'string')
+                toast.custom((t) => (
+                  <ToastNotification
+                    toast={t}
+                    type="error"
+                    message={newBasket}
+                  />
+                ))
+              else
+                toast.custom((t) => (
+                  <ToastNotification
+                    toast={t}
+                    type="success"
+                    message={`Added ${toTake} ${part.name} to basket`}
+                  />
+                ))
+            }}
+          >
+            Add to basket
+          </button>
         </div>
       </div>
     </div>

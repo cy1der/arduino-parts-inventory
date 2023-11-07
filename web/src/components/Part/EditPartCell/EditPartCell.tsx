@@ -6,6 +6,7 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import PartForm from 'src/components/Part/PartForm'
+import ToastNotification from 'src/components/ToastNotification'
 
 export const QUERY = gql`
   query EditPartById($id: Int!) {
@@ -41,11 +42,15 @@ export const Failure = ({ error }: CellFailureProps) => (
 export const Success = ({ part }: CellSuccessProps<EditPartById>) => {
   const [updatePart, { loading, error }] = useMutation(UPDATE_PART_MUTATION, {
     onCompleted: () => {
-      toast.success('Part updated')
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="success" message="Part updated" />
+      ))
       navigate(routes.parts())
     },
     onError: (error) => {
-      toast.error(error.message)
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="error" message={error.message} />
+      ))
     },
   })
 

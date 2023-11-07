@@ -4,7 +4,8 @@ import { Link, routes, navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { timeTag } from 'src/pages/lib/formatters'
+import ToastNotification from 'src/components/ToastNotification'
+import { timeTag } from 'src/lib/formatters'
 
 const DELETE_PART_MUTATION = gql`
   mutation DeletePartMutation($id: Int!) {
@@ -21,11 +22,15 @@ interface Props {
 const Part = ({ part }: Props) => {
   const [deletePart] = useMutation(DELETE_PART_MUTATION, {
     onCompleted: () => {
-      toast.success('Part deleted')
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="success" message="Part deleted" />
+      ))
       navigate(routes.parts())
     },
     onError: (error) => {
-      toast.error(error.message)
+      toast.custom((t) => (
+        <ToastNotification toast={t} type="error" message={error.message} />
+      ))
     },
   })
 

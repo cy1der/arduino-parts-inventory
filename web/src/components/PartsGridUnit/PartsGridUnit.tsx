@@ -1,4 +1,9 @@
 import { Link, routes } from '@redwoodjs/router'
+import { toast } from '@redwoodjs/web/toast'
+
+import { addToBasket } from 'src/lib/basket'
+
+import ToastNotification from '../ToastNotification'
 
 interface Props {
   part: {
@@ -7,6 +12,7 @@ interface Props {
     description?: string
     availableStock: number
     imageUrl: string
+    createdAt: string
   }
 }
 
@@ -53,13 +59,32 @@ const PartsGridUnit = ({ part }: Props) => {
             className={`btn btn-primary ${
               part.availableStock == 0 ? 'btn-disabled' : ''
             }`}
+            onClick={() => {
+              const newBasket = addToBasket(part, 1)
+
+              if (typeof newBasket == 'string')
+                toast.custom((t) => (
+                  <ToastNotification
+                    toast={t}
+                    type="error"
+                    message={newBasket}
+                  />
+                ))
+              else
+                toast.custom((t) => (
+                  <ToastNotification
+                    toast={t}
+                    type="success"
+                    message={`Added 1 ${part.name} to basket`}
+                  />
+                ))
+            }}
           >
             Add to basket
           </button>
         </div>
       </div>
     </div>
-    // TODO: add to basket funcionality
   )
 }
 

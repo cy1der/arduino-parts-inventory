@@ -11,7 +11,7 @@ interface Props {
 }
 
 const NavbarAccountIcon = ({ mobile, className }: Props) => {
-  const { isAuthenticated, currentUser, logOut, hasRole } = useAuth()
+  const { isAuthenticated, currentUser, logOut } = useAuth()
 
   return isAuthenticated ? (
     <div className={className}>
@@ -21,12 +21,7 @@ const NavbarAccountIcon = ({ mobile, className }: Props) => {
         }`}
       >
         <summary className="btn btn-ghost swap swap-rotate w-12 hover:shadow-lg">
-          <Icon
-            path={mdiAccount}
-            className={`h-8 w-8 ${
-              hasRole('admin') ? 'text-error' : 'text-base-content'
-            }`}
-          />
+          <Icon path={mdiAccount} className="h-8 w-8 text-base-content" />
         </summary>
         <div className="dropdown-content flex w-auto flex-row items-center space-x-3 rounded-xl bg-base-100 p-3 shadow-lg">
           <p className="whitespace-nowrap font-inter text-lg">
