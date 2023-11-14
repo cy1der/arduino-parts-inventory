@@ -35,7 +35,7 @@ const ToastNotification = ({ type, message, toast }: Props) => (
           : mdiInformation
       }
     />
-    <p className="font-inter">{message}</p>
+    <p className="m-3 ml-0 font-inter">{message}</p>
   </div>
 )
 

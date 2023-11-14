@@ -13,12 +13,12 @@ const ThemeToggle = () => {
   useEffect(() => {
     themeChange(false)
     return () => {
-      themeChange(false)
+      themeChange(true)
     }
   }, [])
 
   return (
-    <label className="btn btn-ghost swap swap-rotate w-12 hover:shadow-lg">
+    <label className="swap-rotate btn btn-ghost swap w-12 hover:shadow-lg">
       <input
         type="checkbox"
         defaultChecked={isDark}

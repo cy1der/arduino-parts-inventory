@@ -28,11 +28,11 @@ const PartForm = (props: PartFormProps) => {
   const [imageUrl, setImageUrl] = useState(props?.part?.imageUrl)
 
   const onSubmit = (data: FormPart) => {
-    console.log(imageUrl)
-    const dataWithImageUrl = Object.assign(data, {
+    const dataUpdated = Object.assign(data, {
       imageUrl: imageUrl ?? '/no_image.png',
     })
-    props.onSave(dataWithImageUrl, props?.part?.id)
+
+    props.onSave(dataUpdated, props?.part?.id)
   }
 
   const onImageUpload = (response) => {

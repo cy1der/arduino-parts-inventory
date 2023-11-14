@@ -17,7 +17,7 @@ const HomePage = ({ page = 1, sort = 'id', order = 'ascending' }: Props) => {
 
       <div className="my-16 text-center font-inter md:my-24">
         <h1 className="text-4xl font-extrabold tracking-wide md:text-6xl">
-          Arduino Parts Inventory
+          Parts Inventory
         </h1>
         <p className="pt-4 text-xl">Only take what you need</p>
       </div>

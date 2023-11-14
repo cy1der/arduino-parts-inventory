@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -15,16 +15,32 @@ model Part {
   availableStock Int      @default(0)
   imageUrl       String   @default("/no_image.png")
   createdAt      DateTime @default(now())
+  transactionId  Int?
 }
 
 model User {
-  id                  Int       @id @default(autoincrement())
+  id                  Int           @id @default(autoincrement())
   firstName           String
   lastName            String
-  email               String    @unique
+  email               String        @unique
   hashedPassword      String
   salt                String
   resetToken          String?
   resetTokenExpiresAt DateTime?
-  roles               String    @default("user")
+  roles               String        @default("user")
+  transactions        Transaction[]
+}
+
+enum TransactionType {
+  in
+  out
+}
+
+model Transaction {
+  id     Int             @id @default(autoincrement())
+  date   DateTime        @default(now())
+  user   User            @relation(fields: [userId], references: [id])
+  userId Int
+  type   TransactionType
+  parts  Json[] // { part: Part, quantity: Int }[]
 }

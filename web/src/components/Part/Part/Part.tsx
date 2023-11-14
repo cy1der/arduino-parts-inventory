@@ -40,18 +40,25 @@ const Part = ({ part }: Props) => {
     }
   }
 
+  const preview = (url: string) => {
+    if (url.includes('no_image.png')) return url
+    const parts = url.split('/')
+    parts.splice(3, 0, 'resize=height:500')
+    return parts.join('/')
+  }
+
   return (
     <>
-      <div className="rw-segment">
+      <div className="rw-segment font-inter">
         <header className="rw-segment-header">
           <h2 className="rw-heading rw-heading-secondary">
-            Part {part.id} Detail
+            Part {part.id} details
           </h2>
         </header>
         <table className="rw-table">
           <tbody>
             <tr>
-              <th>Id</th>
+              <th>ID</th>
               <td>{part.id}</td>
             </tr>
             <tr>
@@ -68,7 +75,13 @@ const Part = ({ part }: Props) => {
             </tr>
             <tr>
               <th>Image</th>
-              <td>{part.imageUrl}</td>
+              <td>
+                <img
+                  alt=""
+                  src={preview(part.imageUrl)}
+                  style={{ display: 'block', margin: '2rem 0' }}
+                />
+              </td>
             </tr>
             <tr>
               <th>Created at</th>

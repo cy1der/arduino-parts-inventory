@@ -5,9 +5,6 @@
 .rw-scaffold h2 {
   @apply m-0;
 }
-.rw-scaffold ul {
-  @apply m-0 p-0;
-}
 .rw-scaffold input:-ms-input-placeholder {
   @apply text-gray-500;
 }

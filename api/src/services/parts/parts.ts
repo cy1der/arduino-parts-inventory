@@ -77,12 +77,22 @@ export const partPage = ({
 }
 
 export const createPart: MutationResolvers['createPart'] = ({ input }) => {
+  input.description =
+    input.description.length == 0
+      ? 'No description provided'
+      : input.description
+
   return db.part.create({
     data: input,
   })
 }
 
 export const updatePart: MutationResolvers['updatePart'] = ({ id, input }) => {
+  input.description =
+    input.description.length == 0
+      ? 'No description provided'
+      : input.description
+
   return db.part.update({
     data: input,
     where: { id },

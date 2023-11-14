@@ -7,6 +7,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
+import AdminMenu from 'src/components/AdminMenu/AdminMenu'
 import NavbarAccountIcon from 'src/components/NavbarAccountIcon/NavbarAccountIcon'
 import ThemeToggle from 'src/components/ThemeToggle/ThemeToggle'
 import { getBasket } from 'src/lib/basket'
@@ -38,20 +39,16 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
           </Link>
         </div>
         <div className="ml-auto justify-end space-x-3">
-          {hasRole('admin') ? (
-            <ul className="relative hidden items-center space-x-3 lg:flex">
-              <li>
-                <Link
-                  to={routes.parts()}
-                  className="btn btn-ghost font-inter hover:shadow-lg"
-                >
-                  Parts
-                </Link>
-              </li>
-            </ul>
-          ) : (
-            <></>
-          )}
+          <ul className="relative hidden items-center space-x-3 lg:flex">
+            <li>
+              <Link
+                to={routes.userTransactions()}
+                className="btn btn-ghost font-inter hover:shadow-lg"
+              >
+                Transactions
+              </Link>
+            </li>
+          </ul>
           <ThemeToggle />
           <Link
             to={routes.basket()}
@@ -70,6 +67,7 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
             </div>
           </Link>
           <NavbarAccountIcon mobile={false} className="hidden lg:block" />
+          <AdminMenu mobile={false} className="hidden lg:block" />
           <div className="lg:hidden">
             <input
               id="mobile-menu-drawer"
@@ -92,7 +90,11 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
               <ul className="min-h-full w-80 space-y-3 bg-base-100 p-3 text-base-content shadow-lg">
                 <li>
                   <div className="flex items-center justify-between">
-                    <Icon path={mdiChip} className="ml-3 h-10 text-logo" />
+                    {hasRole('admin') ? (
+                      <AdminMenu mobile={true} />
+                    ) : (
+                      <Icon path={mdiChip} className="ml-3 h-10 text-logo" />
+                    )}
                     <Link
                       to={routes.home()}
                       className="btn btn-ghost items-center hover:shadow-lg"
@@ -104,24 +106,20 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
                     <NavbarAccountIcon mobile={true} />
                   </div>
                 </li>
-                {hasRole('admin') ? (
-                  <li>
-                    <Link
-                      to={routes.parts()}
-                      className="btn btn-ghost w-full hover:shadow-lg"
-                    >
-                      <p className="font-inter text-base">Parts</p>
-                    </Link>
-                  </li>
-                ) : (
-                  <></>
-                )}
                 <li>
                   <Link
                     to={routes.basket()}
                     className="btn btn-ghost w-full hover:shadow-lg"
                   >
                     <p className="font-inter text-base">Basket</p>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={routes.userTransactions()}
+                    className="btn btn-ghost w-full hover:shadow-lg"
+                  >
+                    <p className="font-inter text-base">Transactions</p>
                   </Link>
                 </li>
               </ul>

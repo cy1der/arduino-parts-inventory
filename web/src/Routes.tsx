@@ -20,12 +20,18 @@ const Routes = () => {
           <Route path="/admin/parts/{id:Int}" page={PartPartPage} name="part" />
           <Route path="/admin/parts" page={PartPartsPage} name="parts" />
         </Set>
+        <Set wrap={ScaffoldLayout} title="Transactions" titleTo="adminTransactions">
+          <Route path="/admin/transactions" page={AdminTransactionsPage} name="adminTransactions" />
+        </Set>
       </Private>
 
       <Set wrap={NavbarLayout}>
         <Route path="/" page={HomePage} name="home" />
         <Route path="/part/{id:Int}" page={PartPage} name="partDetails" />
         <Route path="/basket" page={BasketPage} name="basket" />
+        <Private unauthenticated="login">
+          <Route path="/transactions" page={TransactionsPage} name="userTransactions" />
+        </Private>
       </Set>
 
       <Route notfound page={NotFoundPage} />
