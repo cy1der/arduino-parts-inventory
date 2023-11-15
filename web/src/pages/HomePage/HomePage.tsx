@@ -8,9 +8,15 @@ interface Props {
   page: number
   sort: SortMethod
   order: SortOrder
+  search?: string
 }
 
-const HomePage = ({ page = 1, sort = 'id', order = 'ascending' }: Props) => {
+const HomePage = ({
+  page = 1,
+  sort = 'id',
+  order = 'ascending',
+  search,
+}: Props) => {
   return (
     <>
       <MetaTags title="Home" description="Home page" />
@@ -21,7 +27,7 @@ const HomePage = ({ page = 1, sort = 'id', order = 'ascending' }: Props) => {
         </h1>
         <p className="pt-4 text-xl">Only take what you need</p>
       </div>
-      <PartsCell page={page} sort={sort} order={order} />
+      <PartsCell page={page} sort={sort} order={order} search={search} />
     </>
   )
 }

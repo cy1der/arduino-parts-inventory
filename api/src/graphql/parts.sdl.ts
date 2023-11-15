@@ -14,6 +14,7 @@ export const schema = gql`
     page: Int!
     sort: SortMethod!
     order: SortOrder!
+    search: String
   }
 
   enum SortMethod {
@@ -30,7 +31,12 @@ export const schema = gql`
   }
 
   type Query {
-    partPage(page: Int, sort: SortMethod, order: SortOrder): PartPage @skipAuth
+    partPage(
+      page: Int!
+      sort: SortMethod!
+      order: SortOrder!
+      searchQuery: String
+    ): PartPage @skipAuth
     parts: [Part!]! @skipAuth
     part(id: Int!): Part @skipAuth
   }

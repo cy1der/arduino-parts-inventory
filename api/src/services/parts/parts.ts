@@ -1,10 +1,5 @@
 import * as Filestack from 'filestack-js'
-import type {
-  QueryResolvers,
-  MutationResolvers,
-  SortMethod,
-  SortOrder,
-} from 'types/graphql'
+import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
 import { db } from 'src/lib/db'
 
@@ -23,14 +18,11 @@ export const part: QueryResolvers['part'] = ({ id }) => {
   })
 }
 
-export const partPage = ({
+export const partPage: QueryResolvers['partPage'] = async ({
   page = 1,
   sort = 'id',
   order = 'ascending',
-}: {
-  page: number
-  sort: SortMethod
-  order: SortOrder
+  searchQuery,
 }) => {
   const offset = (page - 1) * PARTS_PER_PAGE
   let orderByCase
@@ -63,17 +55,42 @@ export const partPage = ({
       break
   }
 
-  return {
-    parts: db.part.findMany({
-      take: PARTS_PER_PAGE,
-      skip: offset,
-      orderBy: orderByCase,
-    }),
-    count: db.part.count(),
-    page,
-    sort,
-    order,
-  }
+  if (searchQuery && searchQuery.length > 0)
+    return {
+      parts: await db.part.findMany({
+        where: {
+          name: {
+            contains: searchQuery,
+          },
+        },
+        take: PARTS_PER_PAGE,
+        skip: offset,
+        orderBy: orderByCase,
+      }),
+      count: await db.part.count({
+        where: {
+          name: {
+            contains: searchQuery,
+          },
+        },
+      }),
+      page,
+      sort,
+      order,
+      search: searchQuery,
+    }
+  else
+    return {
+      parts: await db.part.findMany({
+        take: PARTS_PER_PAGE,
+        skip: offset,
+        orderBy: orderByCase,
+      }),
+      count: await db.part.count(),
+      page,
+      sort,
+      order,
+    }
 }
 
 export const createPart: MutationResolvers['createPart'] = ({ input }) => {

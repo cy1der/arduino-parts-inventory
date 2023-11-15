@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
+import { useState } from 'react'
+
 import {
   mdiAlert,
   mdiChevronRight,
@@ -16,7 +18,7 @@ import PartsGridUnit from '../PartsGridUnit/PartsGridUnit'
 
 const POSTS_PER_PAGE = 8
 
-export const beforeQuery = ({ page, sort, order }) => {
+export const beforeQuery = ({ page, sort, order, search }) => {
   page = page ? parseInt(page, 10) : 1
   sort =
     sort &&
@@ -26,12 +28,17 @@ export const beforeQuery = ({ page, sort, order }) => {
   order =
     order && (['ascending', 'descending'].includes(order) ? order : 'ascending')
 
-  return { variables: { page, sort, order } }
+  return { variables: { page, sort, order, search } }
 }
 
 export const QUERY = gql`
-  query PartsQuery($page: Int, $sort: SortMethod, $order: SortOrder) {
-    partPage(page: $page, sort: $sort, order: $order) {
+  query PartsQuery(
+    $page: Int!
+    $sort: SortMethod!
+    $order: SortOrder!
+    $search: String
+  ) {
+    partPage(page: $page, sort: $sort, order: $order, searchQuery: $search) {
       parts {
         id
         name
@@ -44,6 +51,7 @@ export const QUERY = gql`
       page
       sort
       order
+      search
     }
   }
 `
@@ -54,8 +62,33 @@ export const Loading = () => (
   </div>
 )
 
-export const Empty = () => (
-  <div className="flex justify-center">
+export const Empty = (
+  search: string,
+  setSearch: {
+    (value: React.SetStateAction<string>): void
+    (arg0: string): void
+  }
+) => (
+  <div className="mx-auto w-fit flex-col justify-center space-y-3">
+    <div className="flex space-x-3 font-inter">
+      <input
+        type="search"
+        autoComplete="off"
+        spellCheck="false"
+        placeholder="Search"
+        className="input input-bordered w-full max-w-xs"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <Link
+        className="btn"
+        to={routes.home({
+          search: search,
+        })}
+      >
+        Search
+      </Link>
+    </div>
     <div className="alert w-auto">
       <p className="text-center font-inter">It&#39;s empty in here...</p>
     </div>
@@ -112,13 +145,37 @@ export const Success = ({ partPage }: CellSuccessProps<PartsQuery>) => {
     return orderText
   }
 
-  if (partPage.count == 0) return Empty()
+  const [search, setSearch] = useState(partPage.search ?? '')
+
+  if (partPage.count == 0) return Empty(search, setSearch)
   else {
     const sortByText: string = sortMethodToText(partPage.sort)
     const orderText: string = sortOrderToText(partPage.order)
 
     return (
       <div className="flex flex-col items-center space-y-6">
+        <div className="flex space-x-3 font-inter">
+          <input
+            type="search"
+            autoComplete="off"
+            spellCheck="false"
+            placeholder="Search (case sensitive)"
+            className="input input-bordered w-full max-w-xs"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <Link
+            className="btn"
+            to={routes.home({
+              page: partPage.page,
+              sort: partPage.sort,
+              order: partPage.order,
+              search: search,
+            })}
+          >
+            Search
+          </Link>
+        </div>
         <div className="flex space-x-3 font-inter">
           <div className="dropdown">
             <label tabIndex={0} className="btn m-1 normal-case">
@@ -137,6 +194,7 @@ export const Success = ({ partPage }: CellSuccessProps<PartsQuery>) => {
                         page: partPage.page,
                         sort,
                         order: partPage.order,
+                        search: partPage.search,
                       })}
                     >
                       {sortMethodToText(sort)}
@@ -162,6 +220,7 @@ export const Success = ({ partPage }: CellSuccessProps<PartsQuery>) => {
                       page: partPage.page,
                       sort: partPage.sort,
                       order,
+                      search: partPage.search,
                     })}
                   >
                     {sortOrderToText(order)}
