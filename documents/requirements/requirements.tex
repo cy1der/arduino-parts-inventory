@@ -1,0 +1,167 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage{indentfirst}
+
+% Set margin
+\usepackage[margin=1in]{geometry}
+
+% Title
+\title{Parts Inventory Requirements}
+\author{Ahmed Al-Taiar}
+\date{\today}
+
+% Document
+\begin{document}
+\maketitle
+
+\section{Overview}
+The purpose of Parts Inventory is to manage all the Arduino modules, tracking when, who, and how many of each part was taken and returned at any given time. Users will have to create an account with their details in order to be able to achieve this. Administrator users will have access to the database through a special menu and will be able to create, update, retrieve, and delete parts as they wish. Administrator users are also able to view a log of all transactions, both incoming and outgoing. The website also adapts to fit small screens for use on mobile devices.
+
+\section{Data Store}
+Most user, part, and transaction data will be stored in their respective files located in the server for quick access to data. The only exception is going to be the images associated with each part (if provided), which will be stored in a third-party image hosting service.
+
+\section{Account System}
+
+\subsection{Sign-up}
+Users will be need to sign up for an account through a sign-up page on the website in order to access transaction privileges. Users will input their first and last name, email address, and password in order to create their account. The following information about that user will be stored in the data store:
+
+\begin{itemize}
+  \item A unique identifier as a number
+  \item Email address as text
+  \item First name as text
+  \item Last name as text
+  \item Encrypted password as text, so that it is stored securely
+  \item List of transactions they have done
+  \item Their role (either ``user'' or ``admin'')
+\end{itemize}
+
+\subsubsection{Role}
+If an account's email address is part of the list of administrator email addresses (upon sign-up), that account will have administrator privileges. The list is hidden from the public.
+
+\subsection{Login}
+Users with an account will be able to log in using their email address and password. If the password is correct for the account with the given email address, proceed with the login. Otherwise, reject the login. Users will stay logged in between sessions using the web browser's cookies. Users are able to log out of their account at any time through a button in the navigation bar.
+
+\subsection{Resetting Password}
+If the user forgets their password, they will be able to reset it by entering their email address. If an account with that address exists, an email will be sent with a link that users can go to, so they can reset the password.
+
+\section{Parts}
+A part is defined as any unique item, whether it is an Arduino board, module, wire, resistor, LED, etc. Administrator users will be able to create, update, and delete parts. 
+
+\subsection{Creating Parts}
+Parts can be created by entering the following information:
+
+\begin{itemize}
+  \item The name of the part
+  \item A description (optional)
+  \item Amount available, with a minimum of zero
+  \item An image (optional)
+\end{itemize}
+
+If provided, the image will be uploaded to a third party image hosting service. Otherwise, use a placeholder ``no image provided'' image. Using the aforementioned inputs, the following data will be stored in the data store:
+
+\begin{itemize}
+  \item A unique identifier as a number
+  \item The name as text
+  \item The description as text, if no description was provided, ``No description provided'' is used instead
+  \item The amount available
+  \item A link to the uploaded image as text, if no image was provided, the link to the ``no image provided'' placeholder image is used instead
+  \item The date and time the part was created at
+\end{itemize}
+
+\subsection{Updating Parts}
+Parts can be updated manually by retrieving the following information and then edit:
+
+\begin{itemize}
+  \item The name of the part
+  \item Description
+  \item Amount available
+  \item The image
+\end{itemize}
+
+The updated fields will then be overwritten in the data store, the unchanged fields stay the same.
+
+\subsection{Deleting Parts}
+Parts can be deleted off the data store. If the deleted part has an uploaded image, the image will be deleted off the third party image hosting service.
+
+\subsection{Retrieving Parts}
+
+\subsubsection{Regular Users}
+Using the parts stored in the data store, a catalog will be created with pagination, having eight parts per page. Each part that is displayed will include:
+
+\begin{itemize}
+  \item The name
+  \item Description that cuts off if it is too long
+  \item Availability, or ``out of stock'' if the part is not available for withdrawal
+  \item Image
+  \item A button to add the part to the user's list of parts they want to withdraw from the inventory
+\end{itemize}
+
+Users will be able to sort the catalog by any one of:
+
+\begin{itemize}
+  \item Unique identifier (default)
+  \item Name
+  \item Description
+  \item Availability
+  \item Date of creation
+\end{itemize}
+
+The catalog can then be ordered ascending or descending. Users will also be able to search for parts by the name, the catalog will filter the parts so that the search query is present in the results' names. When the user clicks or taps on any of the parts in the catalog, they will be redirected to a page dedicated to that part containing the same information mentioned above, but they will be able to read the full description. In that page, users will also be able to add more than one of that part at a time using a number field where the maximum is the amount available, and the minimum is zero.
+
+\subsubsection{Administrators}
+
+Administrators will be able to everything a regular user can do. They will also have access to a page where they can see all the parts in a compact list, including some information hidden from regular users, being:
+
+\begin{itemize}
+  \item Unique identifier
+  \item Date of creation
+\end{itemize}
+
+Each element of the list will also include three buttons:
+
+\begin{enumerate}
+  \item View the part in a new page in detail (including the hidden information mentioned above)
+  \item Edit the part
+  \item Delete the part
+\end{enumerate}
+
+Access to the administrator view of parts will be through a menu in the navigation bar visible to administrators only.
+
+\section{Basket \& Transactions}
+
+All users, including administrators, will be able to create, update, and retrieve transactions.
+
+\subsection{Creating Transactions}
+
+Users will be able to add parts to a virtual basket that is stored in the web browser's cookies, it will consist of a list of parts, as well as the quantity of each part. The quantity should be limited to the availability of the part and should be greater than zero. If the part is out of stock, prevent the user from adding the part to the basket. The user is able to check out the basket by going to the basket page and press a button. When that button is pressed, save the transaction in the data store, storing:
+
+\begin{itemize}
+  \item The user's unique identifier
+  \item The basket, having the parts and the quantity of each part
+\end{itemize}
+
+When the transaction is complete, empty the basket and decrement the stock of each part by the specified quantity in the data store.
+
+\subsection{Retrieving Transactions}
+
+\subsubsection{Regular Users}
+
+Users can view a list of all the transactions they have performed, they can see a log of all the parts that have been taken out and returned, and when the transaction was done. Users can filter the transaction list by whether the transaction was to return or to take out.
+
+\subsubsection{Administrators}
+
+Similar to that of a regular user, but administrators can see the transactions of all users.
+
+\subsection{Updating Transactions}
+
+Users can return a transaction that is marked as ``out'' in the transaction list. The transaction will then be marked as ``in'', meaning that the parts in the transaction have been returned. When the transaction is marked as ``in'', increment the available stock of each part by the quantity in the data store. Of course, administrators should ensure the parts are being returned in real life before users mark a transaction as ``in''.
+
+\section{Miscellaneous}
+
+\subsection{Theme}
+Users will be able to switch between a light and dark theme across the website. The light theme will have a nearly white background and dark text. The dark theme will have a very dark navy blue background with nearly white text. The selected theme will be saved in the web browser's cookies so the choice persists between sessions.
+
+\subsection{Navigation Bar}
+The website will feature a navigation bar in every page, allowing the user to traverse the pages. The navigation bar will consist of buttons and menus when opened on a laptop or desktop computer. When the website is opened on a small tablet or mobile phone, the navigation bar will transform to be a list of buttons that will appear in a side pane, which is visible with the press of one button.
+
+\end{document}

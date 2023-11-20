@@ -33,7 +33,6 @@ const ForgotPasswordPage = () => {
       // The function `forgotPassword.handler` in api/src/functions/auth.js has
       // been invoked, let the user know how to get the link to reset their
       // password (sent in email, perhaps?)
-      // TODO: forgot password
       toast.custom((t) => (
         <ToastNotification
           toast={t}

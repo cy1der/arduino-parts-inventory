@@ -1,4 +1,5 @@
 import type { APIGatewayProxyEvent, Context } from 'aws-lambda'
+import nodemailer from 'nodemailer'
 
 import {
   DbAuthHandler,
@@ -25,8 +26,44 @@ export const handler = async (
     // You could use this return value to, for example, show the email
     // address in a toast message so the user will know it worked and where
     // to look for the email.
-    handler: (user) => {
-      // TODO: Forgot password link
+    handler: async (user) => {
+      const env = process.env.NODE_ENV || 'development'
+      const domain =
+        env == 'production' ? process.env.PROD_DOMAIN : process.env.DEV_DOMAIN
+
+      const messageContent = `
+      Hello, you are receiving this email because a password reset was requested.
+
+      Enter the following URL to begin resetting your password:
+
+      ${domain}reset-password?reserToken=${user.resetToken}
+
+      If this wasn't you, please disregard this email.
+      `
+
+      const transporter = nodemailer.createTransport({
+        host: 'smtp-relay.brevo.com',
+        port: 587,
+        secure: false,
+        auth: {
+          user: process.env.SEND_IN_BLUE_EMAIL,
+          pass: process.env.SEND_IN_BLUE_KEY,
+        },
+      })
+
+      transporter.verify((error, _success) => {
+        if (error) console.log(error)
+      })
+
+      const info = await transporter.sendMail({
+        from: `"Parts Inventory (noreply)" \<${process.env.SEND_IN_BLUE_EMAIL}>`,
+        to: user.email,
+        subject: 'Account Password Reset Request',
+        text: messageContent,
+      })
+
+      console.log(info)
+
       return user
     },
 
