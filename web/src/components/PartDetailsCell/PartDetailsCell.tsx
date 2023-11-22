@@ -55,7 +55,7 @@ const image = (url: string, size: number) => {
 }
 
 export const Success = ({ part }: CellSuccessProps<FindPartDetailsById>) => {
-  const [toTake, setToTake] = useState(1)
+  const [toTake, setToTake] = useState(part.availableStock > 0 ? 1 : 0)
   return (
     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
       <div className="col-span-2">
@@ -81,7 +81,9 @@ export const Success = ({ part }: CellSuccessProps<FindPartDetailsById>) => {
         <div className="flex space-x-5">
           <div className="join">
             <button
-              className={`btn join-item ${toTake == 1 ? 'btn-disabled' : ''}`}
+              className={`btn join-item ${
+                toTake == 1 || part.availableStock == 0 ? 'btn-disabled' : ''
+              }`}
               onClick={() => setToTake(toTake - 1)}
             >
               <Icon path={mdiMinus} className="h-6 w-6" />
@@ -99,7 +101,7 @@ export const Success = ({ part }: CellSuccessProps<FindPartDetailsById>) => {
             </button>
           </div>
           <button
-            className="btn btn-primary"
+            className={`btn btn-primary ${toTake == 0 ? 'btn-disabled' : ''}`}
             onClick={() => {
               const newBasket = addToBasket(part, toTake)
 
