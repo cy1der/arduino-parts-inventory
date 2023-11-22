@@ -17,7 +17,7 @@ type NavBarLayoutProps = {
 }
 
 const NavBarLayout = ({ children }: NavBarLayoutProps) => {
-  const { hasRole } = useAuth()
+  const { hasRole, isAuthenticated } = useAuth()
   const [basket] = useState(getBasket())
 
   return (
@@ -40,14 +40,18 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
         </div>
         <div className="ml-auto justify-end space-x-3">
           <ul className="relative hidden items-center space-x-3 lg:flex">
-            <li>
-              <Link
-                to={routes.userTransactions()}
-                className="btn btn-ghost font-inter hover:shadow-lg"
-              >
-                Transactions
-              </Link>
-            </li>
+            {isAuthenticated ? (
+              <li>
+                <Link
+                  to={routes.userTransactions()}
+                  className="btn btn-ghost font-inter hover:shadow-lg"
+                >
+                  Transactions
+                </Link>
+              </li>
+            ) : (
+              <></>
+            )}
           </ul>
           <ThemeToggle />
           <Link
@@ -114,14 +118,18 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
                     <p className="font-inter text-base">Basket</p>
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to={routes.userTransactions()}
-                    className="btn btn-ghost w-full hover:shadow-lg"
-                  >
-                    <p className="font-inter text-base">Transactions</p>
-                  </Link>
-                </li>
+                {isAuthenticated ? (
+                  <li>
+                    <Link
+                      to={routes.userTransactions()}
+                      className="btn btn-ghost w-full hover:shadow-lg"
+                    >
+                      <p className="font-inter text-base">Transactions</p>
+                    </Link>
+                  </li>
+                ) : (
+                  <></>
+                )}
               </ul>
             </div>
           </div>
