@@ -7,6 +7,7 @@ Built with [RedwoodJS](https://redwoodjs.com)!
 > - Redwood requires [Node.js](https://nodejs.org/en/) (=18.x) and [Yarn](https://yarnpkg.com/) (>=1.15)
 > - Are you on Windows? For best results, follow our [Windows development setup](https://redwoodjs.com/docs/how-to/windows-development-setup) guide
 > - A PostgreSQL database
+> - A [Brevo](https://www.brevo.com/) account
 
 Start by installing dependencies:
 

@@ -1,5 +1,4 @@
 import type { APIGatewayProxyEvent, Context } from 'aws-lambda'
-import nodemailer from 'nodemailer'
 
 import {
   DbAuthHandler,
@@ -8,6 +7,7 @@ import {
 } from '@redwoodjs/auth-dbauth-api'
 
 import { db } from 'src/lib/db'
+import { sendEmail } from 'src/lib/email'
 
 export const handler = async (
   event: APIGatewayProxyEvent,
@@ -31,38 +31,14 @@ export const handler = async (
       const domain =
         env == 'production' ? process.env.PROD_DOMAIN : process.env.DEV_DOMAIN
 
-      const messageContent = `
-      Hello, you are receiving this email because a password reset was requested.
-
-      Enter the following URL to begin resetting your password:
-
-      ${domain}reset-password?reserToken=${user.resetToken}
-
-      If this wasn't you, please disregard this email.
+      const text = `If this wasn't you, please disregard this email.\n\n\nHello ${user.firstName},\n\nYou are receiving this email because a password reset was requested.\nEnter the following URL to begin resetting your password:\n\n${domain}reset-password?resetToken=${user.resetToken}
       `
 
-      const transporter = nodemailer.createTransport({
-        host: 'smtp-relay.brevo.com',
-        port: 587,
-        secure: false,
-        auth: {
-          user: process.env.SEND_IN_BLUE_EMAIL,
-          pass: process.env.SEND_IN_BLUE_KEY,
-        },
-      })
+      const html = text.replaceAll('\n', '<br />')
 
-      transporter.verify((error, _success) => {
-        if (error) console.log(error)
-      })
+      const subject = 'Password Reset Request'
 
-      const info = await transporter.sendMail({
-        from: `"Parts Inventory (noreply)" \<${process.env.SEND_IN_BLUE_EMAIL}>`,
-        to: user.email,
-        subject: 'Account Password Reset Request',
-        text: messageContent,
-      })
-
-      console.log(info)
+      await sendEmail({ to: user.email, subject, text, html })
 
       return user
     },
