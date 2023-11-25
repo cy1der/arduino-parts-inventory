@@ -63,16 +63,16 @@ const TransactionListItem = ({
   const { currentUser } = useAuth()
 
   return (
-    <div className="collapse-arrow collapse max-w-5xl bg-base-200 font-inter">
+    <div className="collapse collapse-arrow max-w-5xl bg-base-200 font-inter">
       <input type="checkbox" />
       <div className="collapse-title text-xl font-medium">
         <div className="items-center justify-between space-x-3 space-y-3 sm:flex sm:space-y-0">
           <p className="overflow-hidden text-ellipsis whitespace-nowrap">
             {transaction.parts.length} items
           </p>
-          <div className="flex w-fit space-x-3">
+          <div className="w-fit flex-col space-x-3">
             {admin ? (
-              <div className="badge whitespace-nowrap bg-base-300 sm:badge-lg">{`${
+              <div className="badge badge-primary whitespace-nowrap sm:badge-lg">{`${
                 (transaction as Transaction).user?.firstName
               } ${(transaction as Transaction).user?.lastName}`}</div>
             ) : (
