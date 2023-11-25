@@ -1,0 +1,4 @@
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QField Required Type Default Value\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QTransactionType is an enum of values “in” or “out”.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QField Required Type Default Value ID Yes Int Automatically increment Transaction Date Yes Date Now User ID relation Yes Int Type Yes TransactionType Parts Yes Json[]\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QField Required Type Default Value ID Yes Int Automatically increment Transaction Date Yes Date Now User ID relation Yes Int Type Yes TransactionType Parts Yes Json[]\\E$"}

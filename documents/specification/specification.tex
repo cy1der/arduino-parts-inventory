@@ -1,0 +1,203 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\title{Parts Inventory Specification}
+\author{Ahmed Al-Taiar}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Technologies}
+
+\begin{itemize}
+    \item \href{https://redwoodjs.com/}{Redwood Web Framework}
+    \begin{itemize}
+        \item React
+        \item GraphQL
+        \item Prisma
+        \item TypeScript
+        \item Jest
+        \item Storybook
+    \end{itemize}
+    \item \href{https://tailwindcss.com/}{TailwindCSS Utility Classes}
+    \item \href{https://daisyui.com/}{DaisyUI Component Library}
+\end{itemize}
+
+\section{Database}
+
+The website's data will be hosted on a local \href{https://www.postgresql.org/}{PostgreSQL} server with the exception for the part images, those will be stored on \href{https://www.filestack.com/}{Filestack}.
+
+\subsection{Schemas}
+
+\subsubsection{Part}
+
+\begin{tabular}{cccc}
+    \toprule
+    \textbf{Field} & \textbf{Required} & \textbf{Type} & \textbf{Default Value} \\
+    \midrule
+    ID & Yes & Int & Automatically increment \\
+    \midrule
+    Name & Yes & String \\
+    \midrule
+    Description & No & String & No description provided \\
+    \midrule
+    Available stock & Yes & Int & 0 \\
+    \midrule
+    Image URL & Yes & String & Local placeholder image path \\
+    \midrule
+    Date of creation & Yes & Date & Now \\
+    \midrule
+    Transaction ID Relation & No & Int \\
+    \bottomrule
+\end{tabular}
+
+\subsubsection{User}
+
+\begin{tabular}{cccc}
+    \toprule
+    \textbf{Field} & \textbf{Required} & \textbf{Type} & \textbf{Default Value} \\
+    \midrule
+    ID & Yes & Int & Automatically increment \\
+    \midrule
+    First name & Yes & String \\
+    \midrule
+    Last name & Yes & String \\
+    \midrule
+    Email address & Yes & String \\
+    \midrule
+    Encrypted password & Yes & String \\
+    \midrule
+    Password salt & Yes & String \\
+    \midrule
+    Password reset token & No & String \\
+    \midrule
+    Password reset token expiry date & No & Date \\
+    \midrule
+    Role & Yes & String & user \\
+    \midrule
+    Transactions & Yes & Transaction[] \\
+    \bottomrule
+\end{tabular}
+
+\subsubsection{Transaction}
+
+\begin{tabular}{cccc}
+    \toprule
+    \textbf{Field} & \textbf{Required} & \textbf{Type} & \textbf{Default Value} \\
+    \midrule
+    ID & Yes & Int & Automatically increment \\
+    \midrule
+    Transaction Date & Yes & Date & Now \\
+    \midrule
+    User ID relation & Yes & Int \\
+    \midrule
+    Type & Yes & TransactionType \\
+    \midrule
+    Parts & Yes & Json[] \\
+    \bottomrule
+\end{tabular}
+\\\\
+TransactionType is an enum of values ``in'' or ``out''.
+
+\section{Account System}
+
+Use Redwood's built in authentication system then generate pages (using the Redwood command line interface) for signing up, logging in, forgot password, etc. Change the CSS stylesheets to use DaisyUI components instead, for uniformity across pages.
+
+\subsection{Sign Up Page}
+
+Modify the sign-up page to include text fields for entering the user's first and last name, then include the values in the payload when creating a new account.
+
+\section{Part Management}
+
+Generate the pages needed to create, retrieve, update, and delete parts using Redwood's scaffold generator. Pass in the Part schema as input. Change the CSS stylesheets to use DaisyUI components instead, for uniformity across pages.
+
+\subsection{Part Form}
+
+Modify the form for used for creating or updating parts to include Filestack's image uploader component instead of a text field for inputting the image URL, use the outputted image URL from the uploader component in the payload for creating/updating parts.
+
+\subsection{Deleting Parts}
+
+After a part is deleted, automatically delete the image from Filestack as well.
+
+\subsection{Retrieving Parts}
+
+When retrieving a part's image through the image URL, use Filestack's transformation parameters to resize the image to the appropriate size in order to conserve bandwidth. Also create a new GraphQL query, for retrieving parts based on a page and filter, that takes in the following parameters: \\
+
+\begin{tabular}{cccc}
+    \toprule
+    \textbf{Parameter} & \textbf{Required} & \textbf{Type} & \textbf{Default Value} \\
+    \midrule
+    Page & Yes & Int \\
+    \midrule
+    Sort Method & Yes & SortMethod \\
+    \midrule
+    Sort Order & Yes & SortOrder \\
+    \midrule
+    Search query & No & String & Nothing \\
+    \bottomrule
+\end{tabular}
+\\\\
+SortMethod is an enum of any one of these values:
+
+\begin{itemize}
+    \item ID
+    \item Name
+    \item Description
+    \item Available stock
+    \item Date of creation
+\end{itemize}
+
+SortOrder is an enum of any one of these values:
+
+\begin{itemize}
+    \item Ascending
+    \item Descending
+\end{itemize}
+
+\section{Basket}
+
+\subsection{Adding To Basket}
+
+When a user adds a part to the basket, save the part as a Json string and also include the quantity. If the same part is already in the basket, increment the quantity instead. Then save the entire basket as a string in the browser's local storage.
+
+\subsection{Clearing Basket}
+
+Delete the string from the browser's local storage.
+
+\subsection{Deleting From Basket}
+
+Delete the part \& quantity element based on the index.
+
+\subsection{Editing Basket}
+
+The quantity of each element can be modified directly in the basket page.
+
+\section{Transactions}
+
+\subsection{Creating Transactions}
+
+When a user checks out their order, create a transaction in the database. Save the basket and its contents, the user's ID, and date. When the transaction is created, decrement the available stock of each specified part by the quantity. Then clear the basket from the browser's local storage.
+
+\subsection{Retrieving Transactions}
+
+Administrator accounts get access to a second transactions page. It is the exact same as the normal transactions' page with the exception that it lists all transactions instead of just the user's.
+
+\subsection{Returning}
+
+Create a new GraphQL mutation which takes the transaction's ID and user's ID, and then marks a transaction's TransactionType to ``in'', then increment the available stock of each part by the quantity. This mutation can be accessed in the user's transactions page when they want to return parts.
+
+\section{Miscellaneous}
+
+\subsection{Theme}
+
+Use DaisyUI's themes and create a theme toggle component in the navigation bar that switches between light and dark theme. The theme should be saved in the browser's local storage so the theme persists across sessions.
+
+\subsection{Navigation Bar}
+
+On mobile, hide the links on the navigation bar and put them in a list, that is shown with the press of one button on the navigation bar. It should also have the theme toggle component.
+
+\end{document}
