@@ -1,44 +1,35 @@
+import { Link, routes } from '@redwoodjs/router'
+
 export default () => (
-  <main>
-    <style
-      dangerouslySetInnerHTML={{
-        __html: `
-              html, body {
-                margin: 0;
-              }
-              html * {
-                box-sizing: border-box;
-              }
-              main {
-                display: flex;
-                align-items: center;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-                text-align: center;
-                background-color: #E2E8F0;
-                height: 100vh;
-              }
-              section {
-                background-color: white;
-                border-radius: 0.25rem;
-                width: 32rem;
-                padding: 1rem;
-                margin: 0 auto;
-                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-              }
-              h1 {
-                font-size: 2rem;
-                margin: 0;
-                font-weight: 500;
-                line-height: 1;
-                color: #2D3748;
-              }
-            `,
-      }}
-    />
-    <section>
-      <h1>
-        <span>404 Page Not Found</span>
-      </h1>
-    </section>
-  </main>
+  <div className="flex min-h-screen min-w-max items-center justify-center p-3">
+    <div className="mockup-phone font-inter">
+      <div className="camera"></div>
+      <div className="display">
+        <div className="artboard phone-1 bg-base-100 p-2">
+          <div className="pt-6">{message1('W-what, where am I?')}</div>
+          {message2('Leave, now.')}
+          {message1('What, why?')}
+          {message2("You're being watched, this is the 404 zone.")}
+          {message1('I better get going then...')}
+          <div className="flex h-56 items-center justify-center">
+            <Link to={routes.home()} className="btn">
+              Back to safety
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)
+
+const message1 = (message: string) => (
+  <div className="chat chat-end">
+    <div className="chat-bubble chat-bubble-info">{message}</div>
+  </div>
+)
+
+const message2 = (message: string) => (
+  <div className="chat chat-start">
+    <div className="chat-bubble bg-gray-200 text-base-content">{message}</div>
+  </div>
 )
