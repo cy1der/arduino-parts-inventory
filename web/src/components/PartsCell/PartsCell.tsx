@@ -190,12 +190,20 @@ export const Success = ({ partPage }: CellSuccessProps<PartsQuery>) => {
                   <li key={sort}>
                     <Link
                       className="btn btn-ghost w-full normal-case"
-                      to={routes.home({
-                        page: partPage.page,
-                        sort,
-                        order: partPage.order,
-                        search: partPage.search,
-                      })}
+                      to={
+                        partPage.search
+                          ? routes.home({
+                              page: partPage.page,
+                              sort,
+                              order: partPage.order,
+                              search: partPage.search,
+                            })
+                          : routes.home({
+                              page: partPage.page,
+                              sort,
+                              order: partPage.order,
+                            })
+                      }
                     >
                       {sortMethodToText(sort)}
                     </Link>
@@ -216,12 +224,20 @@ export const Success = ({ partPage }: CellSuccessProps<PartsQuery>) => {
                 <li key={order}>
                   <Link
                     className="btn btn-ghost w-full normal-case"
-                    to={routes.home({
-                      page: partPage.page,
-                      sort: partPage.sort,
-                      order,
-                      search: partPage.search,
-                    })}
+                    to={
+                      partPage.search
+                        ? routes.home({
+                            page: partPage.page,
+                            sort: partPage.sort,
+                            order,
+                            search: partPage.search,
+                          })
+                        : routes.home({
+                            page: partPage.page,
+                            sort: partPage.sort,
+                            order,
+                          })
+                    }
                   >
                     {sortOrderToText(order)}
                   </Link>
