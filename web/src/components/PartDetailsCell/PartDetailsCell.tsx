@@ -73,7 +73,7 @@ export const Success = ({ part }: CellSuccessProps<FindPartDetailsById>) => {
         </div>
       </div>
       <div className="col-span-2 space-y-8 font-inter sm:col-span-1">
-        <p className="text-lg">{part.description}</p>
+        <p className="break-words text-lg">{part.description}</p>
         <div className="divider" />
         <p className="text-xl">
           <strong>Current stock:</strong> {part.availableStock}
