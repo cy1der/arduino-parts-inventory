@@ -223,7 +223,11 @@
 
 \subsection{Transactions}
 
-\IPO{\begin{itemize}\item User ID (\texttt{int})\item Filter by (\texttt{enum})\end{itemize}}{Query database for transactions linked to specified user ID and filter\n~\n Render ``filter by'' selection\n\textbf{IF} transactions is empty\n$\Rightarrow$Render ``empty'' \n\textbf{ELSE}\n$\Rightarrow$\textbf{FOR} each transaction\n$\Rightarrow\Rightarrow$Render item count, relative time, and type (``in''/``out'')\n$\Rightarrow\Rightarrow$On press, reveal quantity and title of each part}{Transactions}
+\IPO{\begin{itemize}\item User ID (\texttt{int})\item Filter by (\texttt{enum})\end{itemize}}{Query database for transactions linked to specified user ID and filter\n~\n Render ``filter by'' selection\n\textbf{IF} transactions is empty\n$\Rightarrow$Render ``empty'' \n\textbf{ELSE}\n$\Rightarrow$\textbf{FOR} each transaction\n$\Rightarrow\Rightarrow$Render item count, relative time, and type (``in''/``out'')\n$\Rightarrow\Rightarrow$On press, reveal quantity and title of each part\n$\Rightarrow\Rightarrow$\textbf{IF} type is ``out'' \n$\Rightarrow\Rightarrow\Rightarrow$Render ``return'' button in revealed portion (\ref{returntransaction})}{Transactions}
+
+\subsection{Return Transaction}\label{returntransaction}
+
+\IPO{\begin{itemize}\item Transaction (\texttt{object})\item ``Return'' button\end{itemize}}{\textbf{FOR} each part \& quantity in transaction\n$\Rightarrow$Increment part's stock in database by quantity\n~\n Update transaction's type to ``in''}{Transaction}
 
 \section{Admin Transactions Page}
 
