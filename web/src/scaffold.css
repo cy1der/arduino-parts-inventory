@@ -1,18 +1,6 @@
-.rw-scaffold {
-  @apply bg-white text-gray-600;
-}
 .rw-scaffold h1,
 .rw-scaffold h2 {
   @apply m-0;
-}
-.rw-scaffold input:-ms-input-placeholder {
-  @apply text-gray-500;
-}
-.rw-scaffold input::-ms-input-placeholder {
-  @apply text-gray-500;
-}
-.rw-scaffold input::placeholder {
-  @apply text-gray-500;
 }
 .rw-header {
   @apply navbar items-center justify-between space-x-3 bg-base-100 shadow-lg;

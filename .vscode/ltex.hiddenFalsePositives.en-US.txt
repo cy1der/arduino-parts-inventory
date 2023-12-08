@@ -2,3 +2,7 @@
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QTransactionType is an enum of values “in” or “out”.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QField Required Type Default Value ID Yes Int Automatically increment Transaction Date Yes Date Now User ID relation Yes Int Type Yes TransactionType Parts Yes Json[]\\E$"}
 {"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QField Required Type Default Value ID Yes Int Automatically increment Transaction Date Yes Date Now User ID relation Yes Int Type Yes TransactionType Parts Yes Json[]\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_RULE","sentence":"^\\QAny one of: Redirect Enter (\\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q) “Parts Inventory” button (\\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q) Render navigation bar (\\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q) Render static components Render catalog Catalog page\\E$"}
+{"rule":"WHITESPACE_RULE","sentence":"^\\Q“Sign up” link  Go to sign up page (\\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q)\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_RULE","sentence":"^\\Q“Basket” button Render navigation bar (\\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q) Render basket Basket page\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_RULE","sentence":"^\\Q“Transactions” button Render navigation bar (\\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q) Render transactions Transactions page\\E$"}

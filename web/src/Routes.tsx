@@ -1,4 +1,4 @@
-import { Router, Route, Set, Private } from '@redwoodjs/router'
+import { Router, Route, Set, PrivateSet } from '@redwoodjs/router'
 
 import NavbarLayout from 'src/layouts/NavbarLayout'
 import ScaffoldLayout from 'src/layouts/ScaffoldLayout'
@@ -13,7 +13,7 @@ const Routes = () => {
       <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
       <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
 
-      <Private unauthenticated="home" roles="admin">
+      <PrivateSet unauthenticated="home" roles="admin">
         <Set wrap={ScaffoldLayout} title="Parts" titleTo="parts" buttonLabel="New Part" buttonTo="newPart">
           <Route path="/admin/parts/new" page={PartNewPartPage} name="newPart" />
           <Route path="/admin/parts/{id:Int}/edit" page={PartEditPartPage} name="editPart" />
@@ -23,15 +23,15 @@ const Routes = () => {
         <Set wrap={ScaffoldLayout} title="Transactions" titleTo="adminTransactions">
           <Route path="/admin/transactions" page={AdminTransactionsPage} name="adminTransactions" />
         </Set>
-      </Private>
+      </PrivateSet>
 
       <Set wrap={NavbarLayout}>
         <Route path="/" page={HomePage} name="home" />
         <Route path="/part/{id:Int}" page={PartPage} name="partDetails" />
         <Route path="/basket" page={BasketPage} name="basket" />
-        <Private unauthenticated="login">
+        <PrivateSet unauthenticated="login">
           <Route path="/transactions" page={TransactionsPage} name="userTransactions" />
-        </Private>
+        </PrivateSet>
       </Set>
 
       <Route notfound page={NotFoundPage} />

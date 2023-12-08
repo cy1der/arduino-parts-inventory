@@ -56,7 +56,7 @@ const NavBarLayout = ({ children }: NavBarLayoutProps) => {
           <ThemeToggle />
           <Link
             to={routes.basket()}
-            className="items-cente btn btn-ghost hidden hover:shadow-lg lg:flex"
+            className="items-center btn btn-ghost hidden hover:shadow-lg lg:flex"
           >
             <div className="indicator">
               {basket.length > 0 ? (

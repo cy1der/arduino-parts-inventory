@@ -1,0 +1,236 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+
+\title{Parts Inventory IPO Charts}
+\author{Ahmed Al-Taiar}
+\date{\today}
+
+\newcommand{\IPO}[3]{
+  \begin{center}
+    \begin{tabularx}{\linewidth}{XXX}
+      \toprule
+      \thead{Input} & \thead{Process} & \thead{Output} \\
+      \midrule
+      \RaggedRight{#1} & \RaggedRight{#2} & \RaggedRight{#3} \\
+      \bottomrule
+    \end{tabularx}
+  \end{center}
+}
+
+\newcommand{\n}{\newline}
+
+\begin{document}
+
+\maketitle
+
+\section{Enter}\label{enter}
+
+\subsection{Check If User Is Logged In}\label{loggedin}
+
+\IPO{}
+{ Use the destructured \texttt{boolean isAuthenticated} variable within Redwood's \texttt{useAuth} React hook.}
+{\textbf{IF} \texttt{isAuthenticated}, \texttt{true} \n \textbf{ELSE}, \texttt{false}}
+
+\subsection{Check Theme \& Default To Light}
+
+\IPO{}
+{Check the stored \texttt{theme} value in the browser's local storage.\n~\n\textbf{IF} \texttt{theme} does not exist \n $\Rightarrow$ Set \texttt{theme} to ``light''}{\textbf{IF} \texttt{theme} is ``dark'', \texttt{true} \n \textbf{ELSE}, \texttt{false}}
+
+\section{404}
+
+\IPO{``Back to safety'' button}{}{Go to catalog page}
+
+\section{Navigation Bar}
+
+\subsection{Render Navigation Bar}\label{navbar}
+
+\IPO{Child elements}{\textbf{IF} screen width is small\n$\Rightarrow$ Render menu with all buttons\n\textbf{ELSE}\n$\Rightarrow$ Render all buttons on navigation bar\n~\n Render child elements}{Page with navigation bar at the top}
+
+\subsection{Render All Buttons}\label{buttons}
+
+\IPO{\begin{enumerate}\item User is logged in (\texttt{boolean}) \item User is admin (\texttt{false} if user is not logged in)\end{enumerate}}{Render ``Parts Inventory'' button\n Render ``basket'' button\n~\n\textbf{IF} user is logged in\n$\Rightarrow$ Render ``sign out'' button\n$\Rightarrow$ Render ``transactions'' button\n~\n\textbf{IF} user is admin\n$\Rightarrow$ Render ``parts'' button\n$\Rightarrow$Render (admin) ``transactions'' button}{Buttons}
+
+\subsection{Sign Out}
+
+\IPO{``Sign out'' button}{Use the destructured \texttt{logOut} function within Redwood's \texttt{useAuth} React hook.}{Same page the user was on originally}
+
+\section{Admin Navigation Bar}
+
+\subsection{Render Admin Navigation Bar}\label{adminnavbar}
+
+\IPO{Child elements}{Render all buttons on navigation bar\n~\n Render child elements}{Page with admin navigation bar at the top}
+
+\subsection{Render All Buttons}
+
+\IPO{\begin{enumerate}\item Button label (\texttt{string}) \item Button destination URL (\texttt{string}) \item Title label (\texttt{string}) \item Title destination URL (\texttt{string})\end{enumerate}}{Render home button that goes to the catalog page (\ref{catalog})\n~\n Render title button with specified title and title destination URL\n~\n Render button with specified button destination URL}{Buttons}
+
+\section{Catalog Page}
+
+\IPO{Any one of:\begin{itemize}\item Redirect \item Enter (\ref{enter}) \item ``Parts Inventory'' button (\ref{buttons})\end{itemize}}{Render navigation bar (\ref{navbar})\n Render static components\n Render catalog}{Catalog page}
+
+\subsection{Static Components}
+
+\IPO{}{Render ``Parts Inventory''\n Render ``Only take what you need''}{Static components}
+
+\subsection{Catalog}\label{catalog}
+
+\IPO{\begin{enumerate}\item Page (default: 1)\item Sort Method (default: ID)\item Sort Order (default: ascending)\item Search query (optional)\end{enumerate}}{Query database for parts with inputted search parameters\n~\n Render a ``loading'' placeholder while the database is being queried\n~\n\textbf{IF} no parts found\n$\Rightarrow$Render ``empty'' \n\textbf{ELSE IF} an error occurred\n$\Rightarrow$Render ``error'' \n\textbf{ELSE}\n$\Rightarrow$\textbf{FOR} each part\n$\Rightarrow\Rightarrow$Render details\n$\Rightarrow\Rightarrow$Render ``add to basket'' button (\ref{ATB}, quantity of 1)\n$\Rightarrow\Rightarrow$\textbf{IF} part's stock is 0\n$\Rightarrow\Rightarrow\Rightarrow$Disable button\n$\Rightarrow\Rightarrow$Redirect to the part's page if the part is pressed\n~\n Render dropdown menus to change the search parameters, if any change, repeat~\ref{catalog}}{Catalog}
+
+\section{Forgot Password Page}\label{forgot}
+
+\subsection{Render Form}\label{forgotForm}
+
+\IPO{}{Render email address input\n Render submit button}{Form}
+
+\subsection{Submit}
+
+\IPO{\begin{enumerate}\item ``Submit'' button\item Email address (\texttt{string})\end{enumerate}}{Query database to find account associated with the inputted email address}{\textbf{IF} Account exists with email address\n$\Rightarrow$Send email to account's address with password reset link\n\textbf{ELSE}\n$\Rightarrow$Return to form, account doesn't exist (\ref{forgotForm})}
+
+\section{Login Page}\label{login}
+
+\subsection{Render Form}
+
+\IPO{}{Render email address input\n Render password input\n Render ``forgot password'' link\n Render ``sign up'' link\n Render ``login'' button}{Form}
+
+\subsection{Log In}
+
+\IPO{\begin{enumerate}\item ``Login'' button\item Email address (\texttt{string})\item Password (\texttt{string})\end{enumerate}}{Use the destructured \texttt{logIn} function within Redwood's \texttt{useAuth} React hook\n~\n\textbf{IF} credentials match\n$\Rightarrow$ Save session in browser's cookies, so user is still logged in\n\textbf{ELSE}\n$\Rightarrow$Reject login}{\textbf{IF} login successful\n$\Rightarrow$ Go to the page the user was previously on}
+
+\subsection{Forgot Password}
+
+\IPO{``Forgot password'' link}{}{Go to forgot password page (\ref{forgot})}
+
+\subsection{Sign Up}
+
+\IPO{``Sign up'' link}{}{Go to sign up page (\ref{signup})}
+
+\section{Sign Up Page}\label{signup}
+
+\subsection{Render Form}
+
+\IPO{}{Render first name input\n Render last name input\n Render email address input\n Render password input\n Render ``login'' link\n Render ``sign up'' button}{Form}
+
+\subsection{Sign Up}
+
+\IPO{\begin{enumerate}\item ``Sign up'' button\item First name (\texttt{string})\item Last name (\texttt{string})\item Email address (\texttt{string})\item Password (\texttt{string})\end{enumerate}}{Use the destructured \texttt{signUp} function within Redwood's \texttt{useAuth} React hook\n~\n Save session in browser's cookies, so user is immediately logged in}{Go to the page the user was previously on}
+
+\subsection{Log In}
+
+\IPO{``Log in'' link}{}{Go to login page (\ref{login})}
+
+\section{Reset Password Page}
+
+\subsection{Render Form}
+
+\IPO{Reset token (\texttt{string})}{Render new password input\n Render ``submit'' button\n~\n Match reset token with associated account\n\textbf{IF} reset token is not valid\n$\Rightarrow$Disable ``submit'' button}{Form}
+
+\subsection{Reset Password}
+
+\IPO{\begin{enumerate}\item ``Submit'' button\item New password (\texttt{string})\end{enumerate}}{Use the destructured \texttt{resetPassword} function within Redwood's \texttt{useAuth} React hook}{Go to login page (\ref{login})}
+
+\section{Part Management Page}
+
+\IPO{Either:\begin{itemize}\item Redirect\item ``Parts'' button\end{itemize}}{Render admin navigation bar (\ref{adminnavbar})\n Render part management}{Part management page}
+
+\subsection{Part Management}
+
+\IPO{Database query for parts}{Render a ``loading'' placeholder while the database is being queried\n~\n\textbf{IF} no parts found\n$\Rightarrow$Render ``empty'' \n\textbf{ELSE IF} an error occurred\n$\Rightarrow$Render ``error'' \n\textbf{ELSE}\n$\Rightarrow$\textbf{FOR} each part\n$\Rightarrow\Rightarrow$Render part ID, name, description, stock, thumbnail, and creation date in a table row\n$\Rightarrow\Rightarrow$Render ``show'' button, that goes to its part details page (\ref{partdetails})\n$\Rightarrow\Rightarrow$Render ``edit'' button that goes to its edit page (\ref{editpart})\n$\Rightarrow\Rightarrow$Render ``delete'' button that deletes the part (\ref{deletepart})}{Parts list}
+
+\subsubsection{Delete Part}\label{deletepart}
+
+\IPO{\begin{itemize}\item Part (\texttt{object})\item ``Delete'' button\end{itemize}}{Confirm if the admin wants to delete the part\n~\n\textbf{IF} admin confirms yes\n$\Rightarrow$ Delete part}{Refresh parts list}
+
+\section{Admin Part Page}\label{partdetails}
+
+\IPO{Part ``show'' button}{Render admin navigation bar (\ref{adminnavbar})\n Render admin part}{Admin part page}
+
+\subsection{Admin Part}
+
+\IPO{Part (\texttt{object})}{Render complete part ID, name, description, stock, image, and creation date\n~\n Render ``edit'' button that goes to its edit page (\ref{editpart})\n~\n Render ``delete button'' that deletes the part (\ref{deletepart})}{Part details}
+
+\section{Edit Part Page}\label{editpart}
+
+\IPO{Part ``edit'' button}{Render admin navigation bar (\ref{adminnavbar})\n Render edit form}{Edit part page}
+
+\subsection{Edit Part}
+
+\IPO{Part (\texttt{object})}{Render part name input (initial value: part's name)\n Render part description input (initial value: part's description)\n Render stock number input (initial value: part's stock, must be $\geq0$)\n Render current image with ``replace image'' button\n Render ``save'' button}{Edit form}
+
+\subsection{Replace Image}
+
+\IPO{``Replace image'' button}{Render Filestack file upload}{\textbf{IF} new image file is uploaded\n$\Rightarrow$Filestack CDN URL of the new image\n\textbf{ELSE}\n$\Rightarrow$Current image URL}
+
+\subsection{Save}
+
+\IPO{\begin{itemize}\item Part (\texttt{object})\item New name (\texttt{string})\item New description (\texttt{string})\item New stock (\texttt{int})\item New image URL (\texttt{string})\end{itemize}}{Overwrite the part's fields with the new values\n~\n Update part in database}{Go to part management page}
+
+\section{New Part Page}
+
+\IPO{``New part'' button}{Render admin navigation bar (\ref{adminnavbar})\n Render new part form}{New part page}
+
+\subsection{New Part Form}
+
+\IPO{}{Render part name input\n Render part description input\n Render stock number input (initial value: 0, must be $\geq0$)\n Render Filestack file upload\n Render ``save'' button}{Form}
+
+\subsection{Save}
+
+\IPO{\begin{itemize}\item Name (\texttt{string})\item Description (\texttt{string})\item Stock (\texttt{int})\item Image URL (\texttt{string})\end{itemize}}{Create new part in database}{Go to part management page}
+
+\section{Part Details Page} % TODO
+
+\IPO{Catalog part click}{Render navigation bar (\ref{navbar})\n Render part details}{Part details page}
+
+\subsection{Part Details}
+
+\IPO{Part (\texttt{object})}{Render complete part name, description, stock, and image\n Render quantity selector (range from 1 to part's stock)\n Render ``add to basket'' button with specified quantity (\ref{ATB})}{Part details}
+
+\section{Basket Page}
+
+\IPO{``Basket'' button}{Render navigation bar (\ref{navbar})\n Render basket}{Basket page}
+
+\subsection{Basket}
+
+\IPO{Basket entry in browser's local storage (\texttt{string} or \texttt{null})}{\textbf{IF} basket is \texttt{null} \textbf{OR} empty\n$\Rightarrow$Render ``empty'' \n\textbf{ELSE}\n$\Rightarrow$Parse basket to \texttt{object[]}\n$\Rightarrow$\textbf{FOR} each part in basket\n$\Rightarrow\Rightarrow$Render thumbnail \& title\n$\Rightarrow\Rightarrow$Render quantity selector (range from 1 to part's stock)\n$\Rightarrow\Rightarrow$Render ``delete'' button\n$\Rightarrow$Render ``clear basket'' button\n$\Rightarrow$Render ``checkout'' button}{Basket}
+
+\subsubsection{Delete From Basket}
+
+\IPO{\begin{itemize}\item Basket entry in browser's local storage (\texttt{string} or \texttt{null})\item Basket part\item ``Delete' button'\end{itemize}}{Parse basket to an \texttt{object[]}, or create a new array if \texttt{null} or empty\n Remove part \& quantity from basket array\n Convert basket array back to string\n Overwrite basket in browser's local storage with new basket string}{New basket}
+
+\subsubsection{Add To Basket}\label{ATB}
+
+\IPO{\begin{itemize}\item Basket entry in browser's local storage (\texttt{string} or \texttt{null})\item Part (\texttt{object})\item Quantity (\texttt{int})\item ``Add to basket'' button\end{itemize}}{Parse basket to an \texttt{object[]}, or create a new array if \texttt{null} or empty\n Add part \& quantity to basket array\n Convert basket array back to string\n Overwrite basket in browser's local storage with new basket string}{New basket}
+
+\subsubsection{Clear Basket}
+
+\IPO{``Clear basket'' button}{Delete \texttt{basket} entry from browser's local storage}{}
+
+\subsubsection{Checkout}
+
+\IPO{\begin{itemize}\item User is logged in (\texttt{boolean})\item Parsed basket entry from browser's local storage (\texttt{object[]})\item ``Checkout'' button\end{itemize}}{\textbf{IF} user is not logged in\n$\Rightarrow$Reject transaction\n\textbf{ELSE}\n$\Rightarrow$Get user's ID\n$\Rightarrow$\textbf{FOR} each part in \texttt{basket}\n$\Rightarrow\Rightarrow$Get up-to-date part details from database\n$\Rightarrow\Rightarrow$\textbf{IF} specified quantity for part $>$ part's stock\n$\Rightarrow\Rightarrow\Rightarrow$Reject transaction\n$\Rightarrow\Rightarrow$\textbf{ELSE}\n$\Rightarrow\Rightarrow\Rightarrow$Decrement part's stock by quantity\n$\Rightarrow$Create new transaction in database, with basket, user's ID, and ``out'' as the transaction type\n$\Rightarrow$Delete \texttt{basket} entry from browser's local storage}{Rejection message or transaction}
+
+\section{Transactions Page}
+
+\IPO{``Transactions'' button}{Render navigation bar (\ref{navbar})\n Render transactions}{Transactions page}
+
+\subsection{Transactions}
+
+\IPO{\begin{itemize}\item User ID (\texttt{int})\item Filter by (\texttt{enum})\end{itemize}}{Query database for transactions linked to specified user ID and filter\n~\n Render ``filter by'' selection\n\textbf{IF} transactions is empty\n$\Rightarrow$Render ``empty'' \n\textbf{ELSE}\n$\Rightarrow$\textbf{FOR} each transaction\n$\Rightarrow\Rightarrow$Render item count, relative time, and type (``in''/``out'')\n$\Rightarrow\Rightarrow$On press, reveal quantity and title of each part}{Transactions}
+
+\section{Admin Transactions Page}
+
+\IPO{(Admin)``Transactions'' button}{Render admin navigation bar (\ref{adminnavbar})\n Render admin transactions}{Admin transactions page}
+
+\subsection{Admin Transactions}
+
+\IPO{Filter by (\texttt{enum})}{Query database for all transactions and filter by specified filter\n~\n Render ``filter by'' selection\n\textbf{IF} transactions is empty\n$\Rightarrow$Render ``empty'' \n\textbf{ELSE}\n$\Rightarrow$\textbf{FOR} each transaction\n$\Rightarrow\Rightarrow$Render item count, relative time, type (``in''/``out''), and user's full name\n$\Rightarrow\Rightarrow$On press, reveal quantity and title of each part}{Admin transactions}
+
+\end{document}

@@ -13,10 +13,10 @@
   "dependencies": {
     "@mdi/js": "^7.3.67",
     "@mdi/react": "^1.6.1",
-    "@redwoodjs/auth-dbauth-web": "6.3.3",
-    "@redwoodjs/forms": "6.3.3",
-    "@redwoodjs/router": "6.3.3",
-    "@redwoodjs/web": "6.3.3",
+    "@redwoodjs/auth-d  bauth-web": "6.4.2",
+    "@redwoodjs/forms": "6.4.2",
+    "@redwoodjs/router": "6.4.2",
+    "@redwoodjs/web": "6.4.2",
     "dayjs": "^1.11.10",
     "filestack-react": "^4.0.1",
     "humanize-string": "2.1.0",
@@ -26,7 +26,7 @@
     "theme-change": "^2.5.0"
   },
   "devDependencies": {
-    "@redwoodjs/vite": "6.3.3",
+    "@redwoodjs/vite": "6.4.2",
     "@types/filestack-react": "^4.0.3",
     "@types/node": "^20.8.9",
     "@types/react": "18.2.14",
