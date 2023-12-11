@@ -13,7 +13,7 @@
   "dependencies": {
     "@mdi/js": "^7.3.67",
     "@mdi/react": "^1.6.1",
-    "@redwoodjs/auth-d  bauth-web": "6.4.2",
+    "@redwoodjs/auth-dbauth-web": "6.4.2",
     "@redwoodjs/forms": "6.4.2",
     "@redwoodjs/router": "6.4.2",
     "@redwoodjs/web": "6.4.2",
