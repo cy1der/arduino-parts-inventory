@@ -21,7 +21,7 @@ const thumbnail = (url: string) => {
 const PartsGridUnit = ({ part }: Props) => {
   return (
     <Link to={routes.partDetails({ id: part.id })}>
-      <div className="card-compact card w-72 space-y-3 bg-base-100 font-inter shadow-xl transition-all duration-200 hover:-translate-y-2 hover:shadow-2xl sm:w-96">
+      <div className="card card-compact w-72 space-y-3 bg-base-100 font-inter shadow-xl transition-all duration-200 hover:-translate-y-2 hover:shadow-2xl sm:w-96">
         <figure>
           <img
             className="h-48 object-cover"
@@ -35,7 +35,7 @@ const PartsGridUnit = ({ part }: Props) => {
           <h2 className="card-title justify-between">
             {part.name}
             {part.availableStock == 0 ? (
-              <div className="badge badge-error">Out of stock</div>
+              <div className="badge badge-error min-w-fit">Out of stock</div>
             ) : (
               <div className="badge badge-ghost whitespace-nowrap">
                 {part.availableStock + ' left'}
