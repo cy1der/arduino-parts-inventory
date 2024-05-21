@@ -6833,7 +6833,7 @@ __metadata:
     "@redwoodjs/graphql-server": 6.4.2
     "@types/nodemailer": ^6.4.14
     filestack-js: ^3.27.0
-    nodemailer: ^6.9.7
+    nodemailer: ^6.9.9
   languageName: unknown
   linkType: soft
 
@@ -15658,10 +15658,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemailer@npm:^6.9.7":
-  version: 6.9.7
-  resolution: "nodemailer@npm:6.9.7"
-  checksum: 5ea7f781782361890d4492dc2412496e89fb04c498814e6c4fe7b168a27d7491a00f725cf90c26768907506e8afb76e8cfe6f6300def9940bc7f7e323405eaa6
+"nodemailer@npm:^6.9.9":
+  version: 6.9.13
+  resolution: "nodemailer@npm:6.9.13"
+  checksum: 4d6899f45abb7760a7d3b4d1046de7e08e80a471b84d1f09065a25941ded482e7f9877be248550e681e0270383cb9299f6caded507cbc0e917341bb137cc94a4
   languageName: node
   linkType: hard
 
